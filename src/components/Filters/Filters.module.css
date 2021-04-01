@@ -1,0 +1,34 @@
+.divmin{
+    font-size: 1rem;
+    color: rgb(175, 174, 174);
+    margin:0.5rem
+}
+.divto{
+    font-size: 1rem;
+    color: rgb(2, 2, 2);
+    margin:1rem
+}
+.filter{
+    font-size: 1.5rem;
+    color: rgb(2, 2, 2);
+   font-weight: 500;
+   margin: 1rem 0;
+}
+.avatar1{
+    background-image: url("../map_image.jpg");
+    height: 100px;
+    width: 100px ;
+    border-radius: 50%;
+    margin: 3px;
+}
+.avatar2{
+    background-image: url("../man.jpg");
+    height: 100px;
+    width: 100px ;
+    border-radius: 50%;
+    margin: 3px;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+}

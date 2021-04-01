@@ -1,0 +1,29 @@
+
+.avatar1{
+    background-image: url("../logo.png");
+    height: 70px;
+    width: 70px ;
+    border-radius: 50%;
+    margin: 4px;
+}
+.avatar2{
+    background-image: url("../man.jpg");
+    height: 70px;
+    width: 70px ;
+    border-radius: 50%;
+    margin: 4px;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+   
+}
+.main{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color:#EAEAEA ;
+}
+.space{
+    height: 110px;
+}
