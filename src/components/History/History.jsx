@@ -14,9 +14,10 @@ import {
     Link,
     NavLink,
     useRouteMatch,
- useHistory
+ useHistory,
+ BrowserRouter
   } from "react-router-dom";
-  import Header from "../Header/Header"
+  import { PostProperty,Listproperty,AdminDashboard} from '../index';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,7 +47,31 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2,0,2,0), 
   }
     }));
-function History() {
+
+
+function History(){
+  let { path, url } = useRouteMatch();
+return (
+  <div>
+   
+
+  <Route path={`${url}`} exact component={Historysub}/>
+  <Route path={`${url}/listproperty`}  component={Listproperty}/>
+<Route path={`${url}/postProperty`}  component={ PostProperty}/>
+<Route path={`${url}/adminDashboard`}  component={ AdminDashboard}/>
+
+  
+  </div>
+)
+}
+
+export default History
+
+
+
+
+
+function Historysub() {
     const classes=useStyles();
     let { path, url } = useRouteMatch();
     const history = useHistory();
@@ -55,7 +80,7 @@ function History() {
     }
     return (
         <>
-           <Header/>
+         
               <Container  maxWidth="md">
 
               <Grid    container className={classes.grid1}
@@ -63,7 +88,7 @@ function History() {
   direction="row"
   justify="flex-end"
  >
-       <Button  size="small" onClick={()=>nextpage("/listproperty")} className={classes.btn2} variant="contained" color="primary">
+       <Button  size="small" onClick={()=>nextpage(`${url}/listproperty`)} className={classes.btn2} variant="contained" color="primary">
   My listed property
 </Button>
 
@@ -77,10 +102,10 @@ function History() {
   direction="row"
   justify="flex-end"
   alignItems="center">
-       <Button onClick={()=>nextpage("/PostProperty")}  size="small" startIcon={<PersonAddOutlinedIcon />} className={classes.btn1} variant="contained" color="secondary">
+       <Button onClick={()=>nextpage(`${url}/postProperty`)}  size="small" startIcon={<PersonAddOutlinedIcon />} className={classes.btn1} variant="contained" color="secondary">
   Sell
 </Button>
-<Button  size="small" onClick={()=>nextpage("/adminDashboard")} startIcon={<PersonAddOutlinedIcon />} className={classes.btn1} variant="contained" color="secondary">
+<Button  size="small" onClick={()=>nextpage(`${url}/adminDashboard`)} startIcon={<PersonAddOutlinedIcon />} className={classes.btn1} variant="contained" color="secondary">
  Buy
 </Button>
 
@@ -121,7 +146,7 @@ History
 
   
 <Switch>
-      <Route exact  path={`${url}`} component={Favour}/>
+      <Route   path={`${url}`} component={Favour}/>
 
         <Route  path={`${url}/history`} component={History1}/>
 
@@ -137,4 +162,4 @@ History
     )
 }
 
-export default History
+

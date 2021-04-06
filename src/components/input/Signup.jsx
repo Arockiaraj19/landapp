@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react'
+import React,{useEffect, useState,useContext} from 'react'
 import {Avatar,Button,CssBaseline,TextField,FormControlLabel,Checkbox,Link,Grid, Box,Typography,Container} from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,6 +6,9 @@ import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 import {kred,kblack,kblue,host} from "../colors"
 import axios from "axios"
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import {consumerdata} from "../../App"
+import {useHistory} from "react-router-dom"
+
 const useStyles = makeStyles((theme) => ({
     paper1: {
       
@@ -58,8 +61,12 @@ const useStyles = makeStyles((theme) => ({
 
 
 function Signup() {
-    const classes = useStyles();
 
+
+  
+const consumer=useContext(consumerdata);
+    const classes = useStyles();
+    const history = useHistory()
 
 
     const [firstname,setfirstname]=useState("");
@@ -70,38 +77,51 @@ const [password,setpassword]=useState("");
 const [rpassword,setrpassword]=useState("");
 const [profilePic,setprofile]=useState("");
 const [licensePic,setlicence]=useState("");
+
+
   const uploadprofile=async(event)=>{
     console.log("upload profile");
     const data = new FormData();
-    data.append('file', event.target.files[0]);
-
-   const responce=await axios.post(`${host}api/upload/profile`, data);
-      // .then((res) => {
-      //   this.setState({ photos: [res.data, ...this.state.photos] });
-
-      // });
+    console.log(event.target.files[0]);
+    data.append('image', event.target.files[0]);
+   const responce=await axios.post(`${host}api/upload/profile`, {
+    image: data
+   });
       setprofile(responce.data);
-
       console.log(responce);
   }
+
+
+
   const uploadlicence=async(event)=>{
     console.log("upload licence");
     const data = new FormData();
-    data.append('file', event.target.files[0]);
+    data.append('image', event.target.files[0]);
 
-   const responce=await axios.post(`${host}api/upload/license`, data);
+   const responce=await axios.post(`${host}api/upload/license`, {
+    image: data
+   });
     
 setlicence(responce.data);
       console.log(responce);
   }
+
+
+
+
     const submit=async(e)=>{
+   
       e.preventDefault();
-      console.log(email);
-      console.log(password);
+      
       const responce=await axios.post(`${host}api/auth/register`,{
-        firstname,lastname,email,dob,password,profilePic,licensePic
+        firstname,lastname,email,dob,password,profilePic:"https://source.unsplash.com/random",licensePic:"https://source.unsplash.com/random"
       });
-      console.log(responce);
+      if(responce.status==200){
+alert("you registered successfully");
+history.push("/login");
+      }else{
+        alert("something wrong");
+      }
     }
 
 
@@ -152,6 +172,7 @@ size={"small"}
             name="firstname"
             autoComplete="firstname"
             autoFocus
+            value={firstname}
             validators={['required']}
             errorMessages={['this field is required']}
             onChange={(val)=>setfirstname(val.target.value)}
@@ -170,6 +191,7 @@ size={"small"}
             name="lastname"
             autoComplete="lastname"
             autoFocus
+            value={lastname}
             validators={['required']}
             errorMessages={['this field is required']}
             onChange={(val)=>setlastname(val.target.value)}
@@ -195,6 +217,7 @@ size={"small"}
         InputLabelProps={{
           shrink: true,
         }}
+        value={dob}
         onChange={(val)=>setdob(val.target.value)}
       />
               </Grid>
@@ -275,11 +298,11 @@ size={"small"}
 
         <Grid container  className={classes.paper1}>
         <Typography>Profile pic</Typography>
-        <label htmlFor="upload-photo">
+        <label htmlFor="upload-profile">
   <input
     style={{ display: 'none' }}
-    id="upload-photo"
-    name="upload-photo"
+    id="upload-profile"
+    name="upload-profile"
     onChange={uploadprofile}
     type="file"
   />
@@ -296,11 +319,11 @@ size={"small"}
 
 <Grid container  className={classes.paper1}>
 <Typography>Driving Licence</Typography>
-<label htmlFor="upload-photo">
+<label htmlFor="upload-licence">
   <input
     style={{ display: 'none' }}
-    id="upload-photo"
-    name="upload-photo"
+    id="upload-licence"
+    name="upload-licence"
     onChange={uploadlicence}
     type="file"
   />

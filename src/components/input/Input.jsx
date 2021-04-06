@@ -1,10 +1,12 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import {Avatar,Button,CssBaseline,TextField,FormControlLabel,Checkbox,Link,Grid, Box,Typography,Container} from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import {kred,kblack,kblue,host} from "../colors"
 import axios from "axios"
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import {consumerdata} from "../../App"
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -63,7 +65,8 @@ const useStyles = makeStyles((theme) => ({
 
 
 function Input() {
-
+  const consumer=useContext(consumerdata);
+  let history=useHistory();
 const [email,setemail]=useState("");
 const [password,setpassword]=useState("");
 
@@ -76,7 +79,13 @@ const [password,setpassword]=useState("");
       const responce=await axios.post(`${host}api/auth/login`,{
         email,password
       });
-      console.log(responce);
+ if(responce.status===200){
+   console.log(responce.data);
+consumer.setdata({type:"LOGIN",userid:responce.data.userId,token:responce.data.token,firstname:responce.data.firstname,lastname:responce.data.lastname});
+history.push("/dashboard");
+ }else{
+   alert("something wrong");
+ }
     }
     return (
         <Container component="main" maxWidth="xs">
@@ -149,6 +158,7 @@ const [password,setpassword]=useState("");
             variant="contained"
             color="primary"
             className={classes.signup}
+            onClick={()=>history.push("/signup")}
           >
             Sign Up
           </Button>

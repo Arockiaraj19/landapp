@@ -79,7 +79,7 @@ function Radius() {
     const classes = useStyles();
     return (
         <>
-            <Header/>
+        
            <Container className={classes.container} maxWidth="md">
                <Typography className={classes.text}>Radius</Typography>
                <Slider

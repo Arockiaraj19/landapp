@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 import { AppBar } from '@material-ui/core';
 import img from "../logo.png"
+import {useRouteMatch} from "react-router-dom"
 const useStyles = makeStyles((theme) => ({
   
     flex:{
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 function Header() {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
-
+let {url,path}=useRouteMatch();
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
     };
@@ -39,7 +40,7 @@ const nextpage=()=>{
   history.push("/dashboard");
 }
 const nextpage1=()=>{
-  history.push("/favourite");
+  history.push(`${url}/favourite`);
 }
     return (
         <>

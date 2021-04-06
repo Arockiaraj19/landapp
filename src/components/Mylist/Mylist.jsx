@@ -55,7 +55,7 @@ function Mylist() {
    
     return (
         <>
-            <Header/>
+          
               <Container  maxWidth="md">
 
               <Grid    container className={classes.grid1}

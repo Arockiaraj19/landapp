@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useContext} from 'react'
 import {Modal,Avatar,Container,TextField,Button,Typography,Grid,Card,CardContent,CardMedia,CardActions,ButtonBase} from "@material-ui/core"
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,12 +6,20 @@ import style from "./Dashboard.module.css"
 import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import {kdartblue} from "../colors"
-import { useHistory } from "react-router-dom";
+import { BrowserRouter, useHistory } from "react-router-dom";
 import Header from "../Header/Header"
 import { GoogleMap, useJsApiLoader , InfoWindow, Marker } from '@react-google-maps/api';
 import axios from "axios"
 import {host} from "../colors"
-
+import {consumerdata} from "../../App"
+import { PostProperty,Filters,Detail ,Radius,Listproperty,AdminDashboard,Mylist,History} from '../index';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch
+} from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   heading:{
     fontWeight:700,
@@ -91,15 +99,30 @@ btn1:{
   
 function Dashboard() {
   const classes = useStyles();
+  let history=useHistory()
+  let consumer=useContext(consumerdata)
+  useEffect(() => {
+    if( consumer.data.token==null){
+      history.push("/login")
+    }
+  }, [])
   
-
+  let { path, url } = useRouteMatch();
 
     return (
         <>
     <Header/>
+<BrowserRouter>
+<Switch>
+<Route path={`${url}`} exact component={ChildDashboard}/>
+   <Route path={`${url}/filters`}  component={Filters}/>
+<Route path={`${url}/detail`}  component={Detail}/>
+<Route path={`${url}/radius`}  component={Radius}/>
+<Route path={`${url}/favourite`} component={History}/>
 
-   <ChildDashboard/>
-    
+<Route path={`${url}/mylist`} component={ Mylist}/>
+</Switch>
+</BrowserRouter>
 
         </>
     )
@@ -110,10 +133,11 @@ export default Dashboard
 
 
 const ChildDashboard=()=>{
+  const consumer=useContext(consumerdata);
   const classes = useStyles();
   const history = useHistory();
   const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
+const [property,setproperty]=useState([]);
 
   const nextpage=async(e,id)=>{
     const responce=await axios.post(`${host}api/property`,
@@ -124,12 +148,19 @@ const ChildDashboard=()=>{
     
     {
       headers:{
-        "authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTcxYmMyOGZiOGFkMWUyOGFhOWVjYiIsImlhdCI6MTYxNjMyMTQ5MX0.FzsgCbZXazN8zvYEvdEk06V31_309OxDLQbJAglR2uk",
+        "authorization":consumer.data.token,
       }
     });
     console.log(responce);
     history.push(e);
   }
+
+
+const nextpage1=(e)=>{
+  history.push(e);
+}
+
+
   const containerStyle = {
     width: '100%',
     height: '100%'
@@ -157,12 +188,20 @@ const ChildDashboard=()=>{
   }, [])
 
 useEffect(async()=>{
-const responce=await axios.get(`${host}api/property`,{
-  headers:{
-    "authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTcxYmMyOGZiOGFkMWUyOGFhOWVjYiIsImlhdCI6MTYxNjMyMTQ5MX0.FzsgCbZXazN8zvYEvdEk06V31_309OxDLQbJAglR2uk",
+
+  if( consumer.data.token==null){
+    history.push("/login")
+  }else{
+    const responce=await axios.get(`${host}api/property`,  {
+      headers:{
+        "authorization":consumer.data.token,
+      }});
+    
+    
+    console.log(responce);
+    setproperty(responce.data);
   }
-});
-console.log(responce);
+
 },[]);
 
 const locations = [
@@ -210,14 +249,14 @@ const [ selected, setSelected ] = useState({});
 const onSelect = item => {
   setSelected(item);
 }
-
+let { path, url } = useRouteMatch();
 
   return (
     <>
     <Container className={classes.container} maxWidth="md">
 
     <TextField className={classes.input}  id="outlined-basic" label="Outlined" variant="outlined" />
-    <Button onClick={()=>nextpage("/mylist")} className={classes.btn} size="small"  variant="contained" color="secondary">
+    <Button  className={classes.btn} size="small"  variant="contained" color="secondary">
     Use Current Location
  
 </Button>
@@ -229,13 +268,13 @@ const onSelect = item => {
   alignItems="center">
     
 
-     <Button onClick={()=>nextpage("/radius")} className={classes.btn1} size="small" variant="contained" color="secondary">
+     <Button onClick={()=>nextpage1(`${url}/radius`)} className={classes.btn1} size="small" variant="contained" color="secondary">
   Radius(Miles)
   <div className={style.box}>20</div>
 </Button>
     
     
-     <Button onClick={()=>nextpage("/filters")} size="small" startIcon={<PersonAddOutlinedIcon />} className={classes.btn1} variant="contained" color="secondary">
+     <Button onClick={()=>nextpage1(`${url}/filters`)} size="small" startIcon={<PersonAddOutlinedIcon />} className={classes.btn1} variant="contained" color="secondary">
   Filter
 </Button>
 
@@ -244,7 +283,7 @@ const onSelect = item => {
 
    
 
-     <Button onClick={()=>nextpage("/favourite")} size="small" startIcon={<PersonAddOutlinedIcon />} className={classes.btn1} variant="contained" color="secondary">
+     <Button onClick={()=>nextpage1(`${url}/favourite`)} size="small" startIcon={<PersonAddOutlinedIcon />} className={classes.btn1} variant="contained" color="secondary">
  Favourates
 </Button>
    
@@ -307,7 +346,7 @@ const onSelect = item => {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {cards.map((card) => (
-              <Grid onClick={()=>nextpage("/detail","lkjfsdfjklsdfjsldfjsldfksdlf")} item key={card} xs={12} sm={6} md={6}>
+              <Grid onClick={()=>nextpage(`${url}/detail`,"lkjfsdfjklsdfjsldfjsldfksdlf")} item key={card} xs={12} sm={6} md={6}>
                <div className={style.card}>
 <section className={style.image}>
 

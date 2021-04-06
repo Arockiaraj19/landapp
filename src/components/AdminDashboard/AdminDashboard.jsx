@@ -50,7 +50,7 @@ function AdminDashboard() {
       }
     return (
         <>
-         <Header/>
+  
            <Container  maxWidth="md">
            <Grid    container
           className={classes.grid}

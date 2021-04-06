@@ -1,5 +1,5 @@
 
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import {InputLabel,Checkbox,FormControlLabel,Container,Select,FormControl,TextField,Button,Typography,Grid,Card,CardContent,CardMedia,CardActions,ButtonBase} from "@material-ui/core"
 import { makeStyles } from '@material-ui/core/styles';
 import style from "./PostProperty.module.css"
@@ -11,6 +11,7 @@ import axios from "axios"
 import {host} from "../colors"
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import {consumerdata} from "../../App"
 const useStyles = makeStyles((theme) => ({
     formControl: {
       margin: theme.spacing(1,0,1,0),
@@ -88,7 +89,7 @@ justifyContent:"space-between",
 
 function PostProperty() {
     const classes = useStyles();
-   
+   const consumer=useContext(consumerdata);
     
 
       const [imagedata,setimage]=useState([])
@@ -126,11 +127,7 @@ console.log(imagedata);
         history.push("/dashboard");
       }
 
-const handlesubmit=async()=>{
-const responce=await axios.post(`${host}api/property`,{
-  
-})
-}
+
 
       const containerStyle = {
         width: '100%',
@@ -169,16 +166,63 @@ const [bedroom, setbedroom] = useState("");
 const [propertytype, setpropertytype] = useState("");
 const [feet, setfeet] = useState("");
 const [price, setprice] = useState("");
-
-const submit=()=>{}
+const [afan, setafan] = useState(false);
+const [cfan, setcfan] = useState(false);
+const [hpump, sethpump] = useState(false);
+const [add, setadd] = useState("");
+const [des, setdes] = useState("");
+const [builder, setbuilder] = useState("");
+const submit=async(e)=>{
+  e.preventDefault();
+      
+  const responce=await axios.post(`${host}api/property`,{
+   name:email,
+   sellerId:consumer.data.userid,
+   bedrooms:bedroom,
+   bathrooms:bathroom,
+   type:propertytype,
+   area:feet,
+   price:price,
+   atticFan:afan,
+   ceilingFan:cfan,
+   heatPump:hpump,
+   pictures:["https://source.unsplash.com/random","https://source.unsplash.com/random"],
+   address:add,
+   description:des,
+   status:"available",
+   builder:builder,
+   yearBuilt:"2015",
+   subdivision:"Sk",
+   geoLocation:{
+     type:"Point",
+     coordinates:[-73.856077, 40.848447]
+   }
+   
+  },{
+    headers:{
+      "authorization":consumer.data.token,
+    }});
+  if(responce.status==200){
+alert("you posted  successfully");
+history.push("/dashboard");
+  }else{
+    alert("something wrong");
+  }
+}
 
 
 const checkbox=(e)=>{
   console.log(e);
 }
+
+
+const getlocation=(e)=>{
+  console.log(e.latLng);
+}
+
     return (
         <>
-             <Header/>
+         
              <Container className={classes.container} maxWidth="md">
                 <div className={style.filter}>
                     List your property
@@ -228,6 +272,7 @@ Choose on map
       zoom={14}
       onLoad={onLoad}
       onUnmount={onUnmount}
+      onClick={getlocation}
     >
       { /* Child components, such as markers, info windows, etc. */ }
       <></>
@@ -330,10 +375,10 @@ third part */}
             value={feet}
          onChange={(val)=>setfeet(val.target.value)}
             label="Enter sq.ft area of the property"
-            name="email"
-            validators={['required','minNumber:0', 'maxNumber:255', 'matchRegexp:^[0-9]$']}
+            name="area"
+            validators={['required']}
             autoComplete="email"
-            errorMessages={['this field is required', 'Please enter the number',"you reach max number",'please enter the number']}
+            errorMessages={['this field is required']}
             autoFocus
           />
                         </Grid>
@@ -347,10 +392,10 @@ third part */}
             value={price}
             onChange={(val)=>setprice(val.target.value)}
             label="Enter price of the propery"
-            name="email"
-            validators={['required','minNumber:0', 'maxNumber:255', 'matchRegexp:^[0-9]$']}
+            name="price"
+            validators={['required']}
             autoComplete="email"
-            errorMessages={['this field is required', 'Please enter the number',"you reach max number",'please enter the number']}
+            errorMessages={['this field is required']}
             autoFocus
           />
 
@@ -363,113 +408,80 @@ third part */}
                     <Grid item  xs={12} sm={6} md={4}>
                         
                     <FormControlLabel
-            control={<Checkbox  onChange={checkbox} name="gilad" />}
+            control={<Checkbox  onChange={(e)=>setafan(e.target.checked)} name="gilad" />}
             label="Attic Fan"
           />
                         </Grid>
 
-                        <Grid item  xs={12} sm={6} md={4}>
+                      
+                            <Grid item  xs={12} sm={6} md={4}>
                         
                         <FormControlLabel
-                control={<Checkbox   name="gilad" />}
-                label="Attic Fan"
+                control={<Checkbox onChange={(e)=>setcfan(e.target.checked)}  name="ceiling" />}
+                label="Ceiling Fan"
               />
                             </Grid>
+                            <Grid item  xs={12} sm={6} md={4}>
+                        
+                        <FormControlLabel
+                control={<Checkbox onChange={(e)=>sethpump(e.target.checked)}  name="heat" />}
+                label="Heat pump"
+              />
+                            </Grid>
+                        
+                        
+                
+                   
 
-                            <Grid item  xs={12} sm={6} md={4}>
-                        
-                        <FormControlLabel
-                control={<Checkbox   name="gilad" />}
-                label="Attic Fan"
-              />
-                            </Grid>
-
-                            <Grid item  xs={12} sm={6} md={4}>
-                        
-                        <FormControlLabel
-                control={<Checkbox   name="gilad"  />}
-                label="Attic Fan"
-              />
-                            </Grid>
-                            <Grid item  xs={12} sm={6} md={4}>
-                        
-                        <FormControlLabel
-                control={<Checkbox   name="gilad" />}
-                label="Attic Fan"
-              />
-                            </Grid>
-                            <Grid item  xs={12} sm={6} md={4}>
-                        
-                        <FormControlLabel
-                control={<Checkbox   name="gilad" />}
-                label="Attic Fan"
-              />
-                            </Grid>
-                            <Grid item  xs={12} sm={6} md={4}>
-                        
-                        <FormControlLabel
-                control={<Checkbox   name="gilad" />}
-                label="Attic Fan"
-              />
-                            </Grid>
-                            <Grid item  xs={12} sm={6} md={4}>
-                        
-                        <FormControlLabel
-                control={<Checkbox   name="gilad" />}
-                label="Attic Fan"
-              />
-                            </Grid>
-                            <Grid item  xs={12} sm={6} md={4}>
-                        
-                        <FormControlLabel
-                control={<Checkbox   name="gilad" />}
-                label="Attic Fan"
-              />
-                            </Grid>
-                            <Grid item  xs={12} sm={6} md={4}>
-                        
-                        <FormControlLabel
-                control={<Checkbox   name="gilad" />}
-                label="Attic Fan"
-              />
-                            </Grid>
-                            <Grid item  xs={12} sm={6} md={4}>
-                        
-                        <FormControlLabel
-                control={<Checkbox   name="gilad" />}
-                label="Attic Fan"
-              />
-                            </Grid>
-                            <Grid item  xs={12} sm={6} md={4}>
-                        
-                        <FormControlLabel
-                control={<Checkbox   name="gilad" />}
-                label="Attic Fan"
-              />
-                            </Grid>
-
-                             <Grid item  xs={12} sm={6} md={4}>
-                        
-                    <FormControlLabel
-            control={<Checkbox   name="gilad" />}
-            label="Attic Fan"
-          />
-                        </Grid> <Grid item  xs={12} sm={6} md={4}>
-                        
-                        <FormControlLabel
-                control={<Checkbox   name="gilad" />}
-                label="Attic Fan"
-              />
-                            </Grid>
-                            <Grid item  xs={12} sm={6} md={4}>
-                        
-                        <FormControlLabel
-                control={<Checkbox   name="gilad" />}
-                label="Attic Fan"
-              />
-                            </Grid>
+                          
 
                         </Grid>
+
+                        <Typography>Address</Typography>
+         <TextValidator
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            validators={['required']}
+            errorMessages={['this field is required']}
+            label="Address"
+            name="address"
+            autoComplete="address"
+            autoFocus
+            value={add}
+            onChange={(val)=>setadd(val.target.value)}
+          />
+           <Typography>Description</Typography>
+         <TextValidator
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            validators={['required']}
+            errorMessages={['this field is required']}
+            label="Description"
+            name="description"
+            autoComplete="email"
+            autoFocus
+            value={des}
+            onChange={(val)=>setdes(val.target.value)}
+          />
+           <Typography>Builders</Typography>
+         <TextValidator
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            validators={['required']}
+            errorMessages={['this field is required']}
+            label="Builders"
+            name="builder"
+            autoComplete="builder"
+            autoFocus
+            value={builder}
+            onChange={(val)=>setbuilder(val.target.value)}
+          />
     <main className={classes.main}>
     <Grid container className={classes.udiv}>
                       <Typography className={classes.text1}>Upload property picture           </Typography>
@@ -557,7 +569,7 @@ third part */}
 <Button onClick={nextpage} className={classes.btn3} variant="contained" color="secondary">
 cancel
 </Button>
-<Button  size="small" startIcon={<PersonAddOutlinedIcon />} className={classes.btn1} variant="contained" color="secondary">
+<Button  size="small" startIcon={<PersonAddOutlinedIcon />} type="submit" className={classes.btn1} variant="contained" color="secondary">
 Post
 </Button>
 </Grid>

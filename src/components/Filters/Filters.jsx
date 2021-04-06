@@ -61,7 +61,6 @@ const nextpage=()=>{
       };
     return (
         <>
-            <Header/>
              <Container className={classes.container} maxWidth="md">
                 <div className={style.filter}>
                     Filters

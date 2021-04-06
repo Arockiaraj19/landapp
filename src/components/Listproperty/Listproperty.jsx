@@ -45,7 +45,7 @@ function Listproperty() {
     }
     return (
         <>
-           <Header/>
+       
               <Container className={classes.container} maxWidth="md">
               <Grid    container
               display="flex"

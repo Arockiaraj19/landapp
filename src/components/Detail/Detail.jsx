@@ -101,7 +101,7 @@ function Detail() {
     const classes = useStyles();
     return (
         <>
-            <Header/>
+         
             <Container  maxWidth="md">
             <Grid container className={classes.paper} spacing={2}>
             <Grid item  xs={4} sm={2} md={2}>
