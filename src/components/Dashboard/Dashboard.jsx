@@ -147,6 +147,27 @@ const ChildDashboard = () => {
 
   }
 
+  const addfav=async(sellerid,propertyid)=>{
+    
+    const responce = await axios.post(`${host}api/userlist`,
+    {
+      propertyId: propertyid,
+      sellerId:sellerid,
+      buyerId:consumer.data.userid,
+
+    },
+
+
+    {
+      headers: {
+        "authorization": consumer.data.token,
+      }
+    });
+  console.log(responce);
+
+  }
+
+
 
   const nextpage1 = (e) => {
     history.push(e);
@@ -189,7 +210,9 @@ const ChildDashboard = () => {
       const responce = await axios.get(`${host}api/property`,
 
         {
-          params: Object.assign(consumer.data.filter, { meter: consumer.data.radius }),
+          data: {
+            filter:Object.assign(consumer.data.filter, { meter: consumer.data.radius }),
+          },
           headers: {
             "authorization": consumer.data.token,
           }
@@ -249,12 +272,43 @@ const ChildDashboard = () => {
   }
   let { path, url } = useRouteMatch();
 
+
+const getloc=()=>{
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+   alert("Geolocation is not supported by this browser.") ;
+  }
+}
+
+
+function showPosition(position) {
+ console.log(position.coords.latitude);
+   console.log(position.coords.longitude);
+}
+
+function showError(error) {
+  switch(error.code) {
+    case error.PERMISSION_DENIED:
+    alert( "User denied the request for Geolocation.");
+      break;
+    case error.POSITION_UNAVAILABLE:
+    alert("Location information is unavailable.");
+      break;
+    case error.TIMEOUT:
+    alert( "The request to get user location timed out.");
+      break;
+    case error.UNKNOWN_ERROR:
+   alert("An unknown error occurred.");
+      break;
+  }
+}
   return (
     <>
       <Container className={classes.container} maxWidth="md">
 
         <TextField className={classes.input} id="outlined-basic" label="Outlined" variant="outlined" />
-        <Button className={classes.btn} size="small" variant="contained" color="secondary">
+        <Button className={classes.btn} onClick={getloc} size="small" variant="contained" color="secondary">
           Use Current Location
           
 </Button>
@@ -302,24 +356,25 @@ const ChildDashboard = () => {
               >
                 { /* Child components, such as markers, info windows, etc. */}
                 {
-                  locations.map(item => {
+                  property.map(item => {
                     return (
-                      <Marker key={item.name}
-                        position={item.location}
+                      <Marker key={item._id}
+                        position={{lat:item. geoLocation.coordinates[0],lng:item. geoLocation.coordinates[1]}}
+                      
                         onClick={() => onSelect(item)}
                       />
                     )
                   })
                 }
                 {
-                  selected.location &&
+                  selected. geoLocation &&
                   (
                     <InfoWindow
-                      position={selected.location}
+                      position={{lat:selected. geoLocation.coordinates[0],lng:selected. geoLocation.coordinates[1]}}
                       clickable={true}
-                      onCloseClick={() => setSelected({})}
+                      onCloseClick={()=>setSelected({})}
                     >
-                      <h1>{selected.name}</h1>
+                      <h1 onClick={() => nextpage(`/detail`, selected._id)}>{selected.name}</h1>
                     </InfoWindow>
                   )
                 }
@@ -343,7 +398,7 @@ const ChildDashboard = () => {
 
         {/* End hero unit */}
         <Grid container spacing={4}>
-          {property.map((card) => (
+          {property.map((card,index) => (
             <Grid onClick={() => nextpage(`/detail`, card._id)} item key={card} xs={12} sm={6} md={6}>
               <div className={style.card}>
                 <section className={style.image}>
@@ -355,7 +410,7 @@ const ChildDashboard = () => {
                   <div className={style.text}>₹{card.price}</div>
                   <div className={style.div}>FOR SALE</div>
                   <div className={style.divtext}>{card.address}</div>
-                  <div className={style.iconflex} >
+                  <div onClick={()=>addfav(card.sellerId,card._id)} className={style.iconflex} >
                     <FavoriteIcon className={classes.icon} />
                     <div className={style.fav}>Saved to favourites</div>
                   </div>

@@ -1,5 +1,5 @@
 
-import React,{useState,useContext} from 'react'
+import React,{useState,useContext,useEffect} from 'react'
 import {InputLabel,Checkbox,FormControlLabel,Container,Select,FormControl,TextField,Button,Typography,Grid,Card,CardContent,CardMedia,CardActions,ButtonBase} from "@material-ui/core"
 import { makeStyles } from '@material-ui/core/styles';
 import style from "./PostProperty.module.css"
@@ -117,7 +117,11 @@ console.log(imagedata);
 
       }
 
-
+useEffect(() => {
+  if (consumer.data.token == null) {
+    history.push("/login")
+  }
+}, []);
 
      
 
@@ -223,7 +227,7 @@ const getlocation=(e)=>{
 
     return (
         <>
-         
+           < Header/>
              <Container className={classes.container} maxWidth="md">
                 <div className={style.filter}>
                     List your property

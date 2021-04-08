@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{useEffect,useContext}from 'react'
 import {Modal,Avatar,Container,Button,Typography,Grid,Card,CardContent,CardMedia,CardActions,ButtonBase} from "@material-ui/core"
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,7 +17,8 @@ import {
  useHistory,
  BrowserRouter
   } from "react-router-dom";
-
+import {consumerdata} from "../../App"
+import Header from "../Header/Header"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -56,6 +57,13 @@ const useStyles = makeStyles((theme) => ({
 
 
 function History() {
+  const consumer=useContext(consumerdata);
+  useEffect(() => {
+    if (consumer.data.token == null) {
+      history.push("/login")
+    }
+   
+  }, [])
     const classes=useStyles();
     let { path, url } = useRouteMatch();
     const history = useHistory();
@@ -64,7 +72,7 @@ function History() {
     }
     return (
         <>
-         
+           < Header/>
               <Container  maxWidth="md">
 
               <Grid    container className={classes.grid1}

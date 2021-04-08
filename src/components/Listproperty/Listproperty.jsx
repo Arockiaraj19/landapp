@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect,useContext} from 'react'
 import {Modal,Avatar,Container,TextField,Button,Typography,Grid,Card,CardContent,CardMedia,CardActions,ButtonBase} from "@material-ui/core"
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,6 +19,7 @@ import Offers from "./widgets/Offers"
 import {kblue,kblack} from "../colors"
 import { useHistory,   useRouteMatch } from "react-router-dom";
 import Header from "../Header/Header"
+import {consumerdata} from "../../App"
 const useStyles = makeStyles((theme) => ({
   nav:{
     lineStyle:"none",
@@ -36,7 +37,12 @@ const useStyles = makeStyles((theme) => ({
   }
     }));
 function Listproperty() {
-
+  const consumer=useContext(consumerdata);
+useEffect(() => {
+  if (consumer.data.token == null) {
+    history.push("/login")
+  }
+}, [])
     const classes=useStyles();
     let { path, url } = useRouteMatch();
     const history = useHistory();
@@ -45,7 +51,7 @@ function Listproperty() {
     }
     return (
         <>
-       
+         < Header/>
               <Container className={classes.container} maxWidth="md">
               <Grid    container
               display="flex"

@@ -14,6 +14,7 @@ import Header from "../Header/Header"
 import axios from "axios"
 import {host} from "../colors"
 import {consumerdata} from "../../App"
+import { BrowserRouter, useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
     paper: {
  
@@ -101,10 +102,14 @@ backgroundColor:kblue,
 
 
 function Detail() {
+  const history=useHistory();
   const [property, setproperty] = useState({});
   const consumer=useContext(consumerdata);
     const classes = useStyles();
     useEffect(async() => {
+      if (consumer.data.token == null) {
+        history.push("/login")
+      }
      var url=new URLSearchParams(window.location.search);
      const responce=await axios.get(`${host}api/property/find/${url.get("id")}`,  {
       headers:{
@@ -115,6 +120,11 @@ function Detail() {
     setproperty(responce.data.property);
      
     }, [])
+
+
+
+
+
     return (
         <>
          
@@ -169,6 +179,7 @@ function Images(props) {
     const classes = useStyles();
     return (
         <>
+          < Header/>
           <Container  maxWidth="md">
           <Grid container className={classes.paper} spacing={2}>
           <Grid item  xs={12} sm={8} md={8}>
@@ -180,7 +191,7 @@ function Images(props) {
 </Grid>
 
 <Grid item  xs={12} sm={4} md={4}>
-<ShowModal/>
+<ShowModal data={props.data}/>
 <div className={style.card1}>
 <section className={style.image1}>
 
@@ -321,6 +332,23 @@ const Paragraph=({data})=>{
     const classes = useStyles();
 let data1="A paragraph is a series of related A paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argument sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argumentA paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argumentA paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argumentA paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argumentA paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argument";
 
+    const consumer=useContext(consumerdata);
+const addfav=async(sellerid,propertyid)=>{
+    
+  const responce = await axios.post(`${host}api/userlist`,
+  {
+    propertyId: propertyid,
+    sellerId:sellerid,
+    buyerId:consumer.data.userid,
+
+  },
+  {
+    headers: {
+      "authorization": consumer.data.token,
+    }
+  });
+console.log(responce);
+}
     return (
 <>
 <Container  maxWidth="md">
@@ -377,7 +405,7 @@ builder
     </Container>
 
     <Grid container className={classes.footer}>
-    <div className={classes.footer}>
+    <div onClick={()=>addfav(data.sellerId,data._id)}  className={classes.footer}>
                <FavoriteIcon className={classes.icon} />
     <div className={style.fav}>Save for later</div>
     

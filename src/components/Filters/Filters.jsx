@@ -1,4 +1,4 @@
-import React, { useState,useContext } from 'react'
+import React, { useState,useContext ,useEffect} from 'react'
 import { InputLabel, Checkbox, FormControlLabel, Container, Select, FormControl, TextField, Button, Typography, Grid, Card, CardContent, CardMedia, CardActions, ButtonBase } from "@material-ui/core"
 import { makeStyles } from '@material-ui/core/styles';
 import style from "./Filters.module.css"
@@ -39,6 +39,13 @@ const useStyles = makeStyles((theme) => ({
 
 
 function Filters() {
+useEffect(() => {
+  if (consumer.data.token == null) {
+    history.push("/login")
+  }
+ 
+}, [])
+
   const classes = useStyles();
 
   const history = useHistory();
@@ -75,6 +82,7 @@ history.push("/dashboard");
 
   return (
     <>
+      < Header/>
       <Container className={classes.container} maxWidth="md">
         <div className={style.filter}>
           Filters

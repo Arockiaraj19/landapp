@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useContext} from 'react'
 import {Modal,Avatar,Container,TextField,Button,Typography,Grid,Card,CardContent,CardMedia,CardActions,ButtonBase} from "@material-ui/core"
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,6 +6,7 @@ import style from "./History.module.css"
 import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 import {host} from "../colors"
 import axios from "axios"
+import { consumerdata } from "../../App"
 import ClearIcon from '@material-ui/icons/Clear';
 const useStyles = makeStyles((theme) => ({
     paper1: {
@@ -85,12 +86,11 @@ const useStyles = makeStyles((theme) => ({
 function History1() {
     const cards = [1, 2];
     const classes = useStyles();
-
-
+const consumer=useContext(consumerdata);
 useEffect(async() => {
   const responce=await axios.get(`${host}api/history`,{
     headers:{
-      "authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTcxYmMyOGZiOGFkMWUyOGFhOWVjYiIsImlhdCI6MTYxNjMyMTQ5MX0.FzsgCbZXazN8zvYEvdEk06V31_309OxDLQbJAglR2uk",
+      "authorization":consumer.data.token,
     }
   });
   console.log(responce);
@@ -100,7 +100,7 @@ useEffect(async() => {
 const clearhistory=async()=>{
   const responce=await axios.delete(`${host}api/history`,{
     headers:{
-      "authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTcxYmMyOGZiOGFkMWUyOGFhOWVjYiIsImlhdCI6MTYxNjMyMTQ5MX0.FzsgCbZXazN8zvYEvdEk06V31_309OxDLQbJAglR2uk",
+      "authorization":consumer.data.token,
     }
   });
   console.log(responce);
@@ -109,7 +109,7 @@ const clearhistory=async()=>{
 const deletei=async(e)=>{
   const responce=await axios.delete(`${host}api/history/${e}`,{
     headers:{
-      "authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTcxYmMyOGZiOGFkMWUyOGFhOWVjYiIsImlhdCI6MTYxNjMyMTQ5MX0.FzsgCbZXazN8zvYEvdEk06V31_309OxDLQbJAglR2uk",
+      "authorization":consumer.data.token,
     }
   });
   console.log(responce);

@@ -1,6 +1,6 @@
 
 
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import {Modal,Avatar,Container,TextField,Button,Typography,Grid,Card,CardContent,CardMedia,CardActions,ButtonBase} from "@material-ui/core"
 import { makeStyles } from '@material-ui/core/styles';
 import DateFnsUtils from '@date-io/date-fns';
@@ -11,6 +11,7 @@ import {
   } from '@material-ui/pickers';
 import axios from "axios"
 import {host} from "../../colors"
+import {consumerdata} from "../../../App"
 const useStyles = makeStyles((theme) => ({
    p:{
        fontSize:"1rem",
@@ -66,6 +67,7 @@ div:{
 
 
 function Openhouse(props) {
+  const consumer=useContext(consumerdata);
     const [selectedDate, setSelectedDate] = React.useState(new Date());
     const [type,settype]=useState("");
 
@@ -79,8 +81,8 @@ function Openhouse(props) {
       e.preventDefault();
     
       const responce=await axios.post(`${host}api/schedule`,{
-        sellerId:"60571bc28fb8ad1e28aa9ecb",
-        propertyId:"60571dec8fb8ad1e28aa9ecc",
+        sellerId:props.data.sellerId,
+        propertyId:props.data._id,
         firstname,
         lastname,
         email,
@@ -90,7 +92,7 @@ function Openhouse(props) {
         time:selectedDate,
       },{
         headers:{
-          "authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTcxYmMyOGZiOGFkMWUyOGFhOWVjYiIsImlhdCI6MTYxNjMyMTQ5MX0.FzsgCbZXazN8zvYEvdEk06V31_309OxDLQbJAglR2uk",
+          "authorization":consumer.data.token,
         }
       });
       console.log(responce);

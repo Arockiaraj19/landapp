@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext,useEffect } from 'react'
 import { Avatar, Container, TextField, Button, Typography, Grid, Slider } from "@material-ui/core"
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
@@ -86,9 +86,15 @@ function Radius() {
 
   }
   const [radius, setradius] = useState(0);
+useEffect(() => {
+  if (consumer.data.token == null) {
+    history.push("/login")
+  }
+}, [])
+
   return (
     <>
-
+  < Header/>
       <Container className={classes.container} maxWidth="md">
         <Typography className={classes.text}>Radius</Typography>
         <Slider

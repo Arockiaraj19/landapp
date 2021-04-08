@@ -1,5 +1,5 @@
 
-import React,{useState,useContext} from 'react'
+import React,{useState,useContext,useEffect} from 'react'
 import {InputLabel,Checkbox,FormControlLabel,Container,Select,FormControl,TextField,Button,Typography,Grid,Card,CardContent,CardMedia,CardActions,ButtonBase} from "@material-ui/core"
 import { makeStyles } from '@material-ui/core/styles';
 import style from "./PostProperty.module.css"
@@ -161,27 +161,30 @@ const showmap=()=>{
 }
 
 useEffect(() => {
-   setemail(data.name);
-   setbathroom(data.bathrooms);
-   setbedroom(data.bedrooms);
-   setpropertytype(data.type);
-setfeet(data.area);
-setprice(data.price);
-setafan(data.atticFan);
-setcfan(data.ceilingFan);
-sethpump(data.heatPump);
-setimage(data.coverImage);
-setimages(data.coverImage);
-setadd(data.address);
-setdes(data.description);
-setstatus(data.status);
-setbuilder(data.builder);
-   setyear(data.yearBuilt);
-   setsubdiv(data.subdivision);
-   setloc(data.geoLocation);
+  if (consumer.data.token == null) {
+    history.push("/login")
+  }
+   setemail(consumer.data.edit.name);
+   setbathroom(consumer.data.edit.bathrooms);
+   setbedroom(consumer.data.edit.bedrooms);
+   setpropertytype(consumer.data.edit.type);
+setfeet(consumer.data.edit.area);
+setprice(consumer.data.edit.price);
+setafan(consumer.data.edit.atticFan);
+setcfan(consumer.data.edit.ceilingFan);
+sethpump(consumer.data.edit.heatPump);
+setimage(consumer.data.edit.coverImage);
+setimages(consumer.data.edit.coverImage);
+setadd(consumer.data.edit.address);
+setdes(consumer.data.edit.description);
+setstatus(consumer.data.edit.status);
+setbuilder(consumer.data.edit.builder);
+   setyear(consumer.data.edit.yearBuilt);
+   setsubdiv(consumer.data.edit.subdivision);
+   setloc(consumer.data.edit.geoLocation);
 }, [])
 
-const [image, setimage] = useState("");
+
 const [images,setimages]=useState([]);
 const [email,setemail]=useState('');
 const [bathroom, setbathroom] = useState("");
@@ -250,7 +253,7 @@ const getlocation=(e)=>{
 
     return (
         <>
-         
+           < Header/>
              <Container className={classes.container} maxWidth="md">
                 <div className={style.filter}>
                     List your property

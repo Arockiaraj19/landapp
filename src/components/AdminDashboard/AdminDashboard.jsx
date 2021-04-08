@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect ,useContext} from 'react'
 import {Modal,Avatar,Container,TextField,Button,Typography,Grid,Card,CardContent,CardMedia,CardActions,ButtonBase} from "@material-ui/core"
 import { makeStyles } from '@material-ui/core/styles';
 import style from "./AdminDashboard.module.css"
@@ -16,6 +16,7 @@ import {
     useRouteMatch,
     useHistory
   } from "react-router-dom";
+  import {consumerdata} from "../../App"
   import {kblue,kblack,kgreen} from "../colors"
 const useStyles = makeStyles((theme) => ({
     p:{
@@ -42,6 +43,13 @@ const useStyles = makeStyles((theme) => ({
 
 
 function AdminDashboard() {
+    const consumer=useContext(consumerdata);
+    useEffect(() => {
+        if (consumer.data.token == null) {
+            history.push("/login")
+          }
+       
+    }, [])
     const history=useHistory();
     const classes = useStyles();
     let { path, url } = useRouteMatch();
@@ -50,7 +58,7 @@ function AdminDashboard() {
       }
     return (
         <>
-  
+  < Header/>
            <Container  maxWidth="md">
            <Grid    container
           className={classes.grid}

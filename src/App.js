@@ -1,5 +1,5 @@
 
-import { PostProperty,Signup,Input,Dashboard,Filters,Detail ,Radius,Listproperty,AdminDashboard,Mylist,History} from './components';
+import { PostProperty,Signup,Input,Dashboard,Filters,Detail ,Radius,Listproperty,AdminDashboard,Mylist,History,Editproperty} from './components';
 import {
   BrowserRouter as Router,
   Switch,
@@ -20,7 +20,7 @@ const initialdata={
 
   },
   radius:0,
-  
+  edit:{},
 }
 
 
@@ -39,6 +39,10 @@ const reducer =(state,action)=>{
       return {
         ...state,radius:action.value,
       }
+      case "EDIT":
+        return {
+          ...state,edit:action.value,
+        }
     default:
      return state;
   }
@@ -55,6 +59,7 @@ const [state,dispatch]=useReducer(reducer,initialdata);
 <Route path="/dashboard" exact component={Dashboard}/>
 <Route path="/listproperty"  component={Listproperty}/>
 <Route path="/postProperty"  component={ PostProperty}/>
+<Route path="/editProperty"  component={ Editproperty}/>
 <Route path="/adminDashboard"  component={ AdminDashboard}/>
 <Route path={`/filters`}  component={Filters}/>
 <Route path={`/detail`}  component={Detail}/>

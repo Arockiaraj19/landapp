@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 },
 }));
 
- function ShowModal() {
+ function ShowModal({datadata}) {
   const classes = useStyles();
  
   const [modalStyle] = React.useState(getModalStyle);
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-     <Showingmodel close={handleClose}/>
+     <Showingmodel data={datadata} close={handleClose}/>
     </div>
   );
 
