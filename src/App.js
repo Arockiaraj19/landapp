@@ -16,6 +16,10 @@ const initialdata={
   token:null,
   firstname:null,
   lastname:null,
+  filter:{
+
+  },
+  radius:0,
   
 }
 
@@ -27,7 +31,14 @@ const reducer =(state,action)=>{
    return {
      ...state,userid:action.userid,token:action.token,firstname:action.firstname,lastname:action.lastname,
    }
-  
+  case "FILTER":
+    return {
+      ...state,filter:action.value,
+    }
+    case "RADIUS":
+      return {
+        ...state,radius:action.value,
+      }
     default:
      return state;
   }
