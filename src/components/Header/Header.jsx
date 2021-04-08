@@ -40,7 +40,7 @@ const nextpage=()=>{
   history.push("/dashboard");
 }
 const nextpage1=()=>{
-  history.push(`${url}/favourite`);
+  history.push(`/mylist`);
 }
     return (
         <>

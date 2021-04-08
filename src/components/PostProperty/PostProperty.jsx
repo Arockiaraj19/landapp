@@ -186,6 +186,7 @@ const submit=async(e)=>{
    atticFan:afan,
    ceilingFan:cfan,
    heatPump:hpump,
+   coverImage:"https://source.unsplash.com/random",
    pictures:["https://source.unsplash.com/random","https://source.unsplash.com/random"],
    address:add,
    description:des,

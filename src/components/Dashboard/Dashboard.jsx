@@ -111,18 +111,9 @@ function Dashboard() {
 
     return (
         <>
-    <Header/>
-<BrowserRouter>
-<Switch>
-<Route path={`${url}`} exact component={ChildDashboard}/>
-   <Route path={`${url}/filters`}  component={Filters}/>
-<Route path={`${url}/detail`}  component={Detail}/>
-<Route path={`${url}/radius`}  component={Radius}/>
-<Route path={`${url}/favourite`} component={History}/>
+<Header/>
+<ChildDashboard/>
 
-<Route path={`${url}/mylist`} component={ Mylist}/>
-</Switch>
-</BrowserRouter>
 
         </>
     )
@@ -140,7 +131,8 @@ const ChildDashboard=()=>{
 const [property,setproperty]=useState([]);
 
   const nextpage=async(e,id)=>{
-    const responce=await axios.post(`${host}api/property`,
+    history.push(e+`?id=${id}`);
+    const responce=await axios.post(`${host}api/history`,
     {
       propertyId:id,
     },
@@ -152,7 +144,7 @@ const [property,setproperty]=useState([]);
       }
     });
     console.log(responce);
-    history.push(e);
+    
   }
 
 
@@ -199,7 +191,7 @@ useEffect(async()=>{
     
     
     console.log(responce);
-    setproperty(responce.data);
+    setproperty(responce.data.properties);
   }
 
 },[]);
@@ -268,13 +260,13 @@ let { path, url } = useRouteMatch();
   alignItems="center">
     
 
-     <Button onClick={()=>nextpage1(`${url}/radius`)} className={classes.btn1} size="small" variant="contained" color="secondary">
+     <Button onClick={()=>nextpage1(`/radius`)} className={classes.btn1} size="small" variant="contained" color="secondary">
   Radius(Miles)
   <div className={style.box}>20</div>
 </Button>
     
     
-     <Button onClick={()=>nextpage1(`${url}/filters`)} size="small" startIcon={<PersonAddOutlinedIcon />} className={classes.btn1} variant="contained" color="secondary">
+     <Button onClick={()=>nextpage1(`/filters`)} size="small" startIcon={<PersonAddOutlinedIcon />} className={classes.btn1} variant="contained" color="secondary">
   Filter
 </Button>
 
@@ -283,7 +275,7 @@ let { path, url } = useRouteMatch();
 
    
 
-     <Button onClick={()=>nextpage1(`${url}/favourite`)} size="small" startIcon={<PersonAddOutlinedIcon />} className={classes.btn1} variant="contained" color="secondary">
+     <Button onClick={()=>nextpage1(`/favourite`)} size="small" startIcon={<PersonAddOutlinedIcon />} className={classes.btn1} variant="contained" color="secondary">
  Favourates
 </Button>
    
@@ -345,18 +337,18 @@ let { path, url } = useRouteMatch();
       
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid onClick={()=>nextpage(`${url}/detail`,"lkjfsdfjklsdfjsldfjsldfksdlf")} item key={card} xs={12} sm={6} md={6}>
+            {property.map((card) => (
+              <Grid onClick={()=>nextpage(`/detail`,card._id)} item key={card} xs={12} sm={6} md={6}>
                <div className={style.card}>
 <section className={style.image}>
 
-              <img className={style.img} alt="complex" src="https://source.unsplash.com/random" />
+              <img className={style.img} alt="complex" src={card.coverImage} />
           
 </section>
 <section className={style.section}>
-    <div className={style.text}>$200,00</div>
+    <div className={style.text}>₹{card.price}</div>
     <div className={style.div}>FOR SALE</div>
-    <div className={style.divtext}>9578-Farvaric-point,Lane Eastern,MD-2640510054111</div>
+    <div className={style.divtext}>{card.address}</div>
     <div className={style.iconflex} >
     <FavoriteIcon className={classes.icon} />
     <div className={style.fav}>Saved to favourites</div>

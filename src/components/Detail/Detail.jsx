@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect,useState,useContext} from 'react'
 import {Avatar,Container,TextField,Button,Typography,Grid,Paper} from "@material-ui/core"
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,6 +11,9 @@ import ShowModal from "./Showmodal"
 import {kred,kblack,kblue} from "../colors"
 import ShowMore from 'react-show-more-button';
 import Header from "../Header/Header"
+import axios from "axios"
+import {host} from "../colors"
+import {consumerdata} from "../../App"
 const useStyles = makeStyles((theme) => ({
     paper: {
  
@@ -98,7 +101,20 @@ backgroundColor:kblue,
 
 
 function Detail() {
+  const [property, setproperty] = useState({});
+  const consumer=useContext(consumerdata);
     const classes = useStyles();
+    useEffect(async() => {
+     var url=new URLSearchParams(window.location.search);
+     const responce=await axios.get(`${host}api/property/find/${url.get("id")}`,  {
+      headers:{
+        "authorization":consumer.data.token,
+      }});
+    
+    console.log(responce.data.property);
+    setproperty(responce.data.property);
+     
+    }, [])
     return (
         <>
          
@@ -106,27 +122,27 @@ function Detail() {
             <Grid container className={classes.paper} spacing={2}>
             <Grid item  xs={4} sm={2} md={2}>
 <Grid className={classes.paper1} container>
-<div className={style.text}>$200,00</div>
+<div className={style.text}>₹{property.price}</div>
     <div className={style.div}>FOR SALE</div>
 </Grid>
 
                 </Grid>
 
                 <Grid item  xs={4} sm={2} md={2}>
-                <div className={style.divtext}>9578-Farvaric-point,Lane Eastern,MD-2640510054111</div>
+                <div className={style.divtext}>{property.address}</div>
                 </Grid>
 
                 <Grid item xs={4} sm={2} md={2}>
-                <div className={style.divtext}>9578-Farvaric-point,Lane Eastern,MD-2640510054111</div>
+                <div className={style.divtext}>{property.address}</div>
                 <div className={style.text}>Resistance</div>
                 </Grid>
                 <Grid item  xs={4} sm={2} md={2}>
-                <div className={style.divtext}>7,beds</div>
-                <div className={style.divtext}>7 baths</div>
+                <div className={style.divtext}>{property.bathrooms},beds</div>
+                <div className={style.divtext}>{property.bedrooms} baths</div>
                 </Grid>
 
                 <Grid item xs={4} sm={2} md={2}>
-                <div className={style.divtext}>2000</div>
+                <div className={style.divtext}>{property.area}</div>
                 <div className={style.text}>Sq.ft</div>
                 </Grid>
                 <Grid item xs={4} sm={2} md={2}>
@@ -137,8 +153,8 @@ function Detail() {
                 </Grid>
                 </Grid>
          </Container> 
-         <Images/>
-         <Paragraph/>
+         <Images image={property.coverImage} address={property.address} images={property.pictures} data={property}/>
+         <Paragraph data={property}/>
         </>
     )
 }
@@ -148,14 +164,8 @@ export default Detail
 
 
 
-function Images() {
-    var items = [
-        "https://source.unsplash.com/random",
-        "https://source.unsplash.com/random",
-        "https://source.unsplash.com/random",
-        "https://source.unsplash.com/random",
-
-    ]
+function Images(props) {
+    var items =props.images;
     const classes = useStyles();
     return (
         <>
@@ -163,10 +173,10 @@ function Images() {
           <Grid container className={classes.paper} spacing={2}>
           <Grid item  xs={12} sm={8} md={8}>
 <section className={style.image}> 
-<img className={style.img} alt="complex" src="https://source.unsplash.com/random" />
+<img className={style.img} alt="complex" src={props.image} />
 </section>
 <div className={style.blue}>Gallery</div>
-<CarouselSlide/>
+<CarouselSlide data={props.data}/>
 </Grid>
 
 <Grid item  xs={12} sm={4} md={4}>
@@ -178,10 +188,8 @@ function Images() {
           
 </section>
 <section className={style.section}>
-<div className={style.divtext}>9578-Farvaric-point,Lane Eastern,MD-2640510054111</div>
-<div className={style.divtext}>9578-Farvaric-point,Lane Eastern,MD-2640510054111</div>
-    <div className={style.divtext}>9578-Farvaric-point,Lane Eastern,MD-2640510054111</div>
-    <div className={style.divtext}>9578-Farvaric-point,Lane Eastern,MD-2640510054111</div>
+<div className={style.divtext}>{props.address}</div>
+
    
 </section>
                    </div>
@@ -261,7 +269,7 @@ size={"small"}
 
 
 
-const CarouselSlide=()=>{
+const CarouselSlide=({data})=>{
     const responsive = {
         superLargeDesktop: {
           // the naming can be any, depends on you.
@@ -309,18 +317,18 @@ const CarouselSlide=()=>{
 
 
 
-const Paragraph=()=>{
+const Paragraph=({data})=>{
     const classes = useStyles();
-let data="A paragraph is a series of related A paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argument sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argumentA paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argumentA paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argumentA paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argumentA paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argument";
+let data1="A paragraph is a series of related A paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argument sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argumentA paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argumentA paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argumentA paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argumentA paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argument";
 
     return (
 <>
 <Container  maxWidth="md">
 <div className={style.blue}>Description</div>
-<div className={style.blue1}>9578-Farvaric-point,Lane Eastern,MD-2640510054111</div>
+<div className={style.blue1}>{data.address}</div>
 <ShowMore styleButton={{backgroundColor:"#B80707",fontSize:"1rem",border:"none"}} maxHeight={200}>
 <div className={style.para}>
-    {data}
+    {data.description}
 </div>
 </ShowMore>
 <div className={style.blue1}>Property Details</div>
@@ -329,37 +337,37 @@ let data="A paragraph is a series of related A paragraph is a series of related 
 <div className={style.para1}>
     Property Type
 </div>
-<div className={style.text}>Single family,Single family,Single family</div>
+<div className={style.text}>{data.type}</div>
     </Grid>
 
     <Grid item  xs={6} sm={6} md={6}>
-    <div className={style.para1}>Bedroom 1</div>
-    <div className={style.para1}>Bedroom 1</div>
+    <div className={style.para1}>Bedroom {data.bedrooms}</div>
+    <div className={style.para1}>Bathroom {data.bathrooms}</div>
     </Grid>
     <Grid item  xs={6} sm={6} md={6}>
 <div className={style.para1}>
    Squere feet
 </div>
-<div className={style.text}>20000 sq ft</div>
+<div className={style.text}>{data.area} sq ft</div>
     </Grid>
 
     <Grid item  xs={6} sm={6} md={6}>
 <div className={style.para1}>
   Year feet
 </div>
-<div className={style.text}>2021</div>
+<div className={style.text}>{data.yearBuilt}</div>
     </Grid>
     <Grid item  xs={6} sm={6} md={6}>
 <div className={style.para1}>
   Subdivision
 </div>
-<div className={style.text}>Langelly</div>
+<div className={style.text}>{data.subdivision}</div>
     </Grid>
     <Grid item  xs={6} sm={6} md={6}>
 <div className={style.para1}>
 builder
 </div>
-<div className={style.text}>Aim builder</div>
+<div className={style.text}>{data.builder}</div>
     </Grid>
 </Grid>
 

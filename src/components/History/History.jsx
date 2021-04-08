@@ -17,7 +17,7 @@ import {
  useHistory,
  BrowserRouter
   } from "react-router-dom";
-  import { PostProperty,Listproperty,AdminDashboard} from '../index';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -49,29 +49,13 @@ const useStyles = makeStyles((theme) => ({
     }));
 
 
-function History(){
-  let { path, url } = useRouteMatch();
-return (
-  <div>
-   
-
-  <Route path={`${url}`} exact component={Historysub}/>
-  <Route path={`${url}/listproperty`}  component={Listproperty}/>
-<Route path={`${url}/postProperty`}  component={ PostProperty}/>
-<Route path={`${url}/adminDashboard`}  component={ AdminDashboard}/>
-
-  
-  </div>
-)
-}
-
-export default History
 
 
 
 
 
-function Historysub() {
+
+function History() {
     const classes=useStyles();
     let { path, url } = useRouteMatch();
     const history = useHistory();
@@ -88,7 +72,7 @@ function Historysub() {
   direction="row"
   justify="flex-end"
  >
-       <Button  size="small" onClick={()=>nextpage(`${url}/listproperty`)} className={classes.btn2} variant="contained" color="primary">
+       <Button  size="small" onClick={()=>nextpage(`/listproperty`)} className={classes.btn2} variant="contained" color="primary">
   My listed property
 </Button>
 
@@ -102,10 +86,10 @@ function Historysub() {
   direction="row"
   justify="flex-end"
   alignItems="center">
-       <Button onClick={()=>nextpage(`${url}/postProperty`)}  size="small" startIcon={<PersonAddOutlinedIcon />} className={classes.btn1} variant="contained" color="secondary">
+       <Button onClick={()=>nextpage(`/postProperty`)}  size="small" startIcon={<PersonAddOutlinedIcon />} className={classes.btn1} variant="contained" color="secondary">
   Sell
 </Button>
-<Button  size="small" onClick={()=>nextpage(`${url}/adminDashboard`)} startIcon={<PersonAddOutlinedIcon />} className={classes.btn1} variant="contained" color="secondary">
+<Button  size="small" onClick={()=>nextpage(`/adminDashboard`)} startIcon={<PersonAddOutlinedIcon />} className={classes.btn1} variant="contained" color="secondary">
  Buy
 </Button>
 
@@ -146,7 +130,7 @@ History
 
   
 <Switch>
-      <Route   path={`${url}`} component={Favour}/>
+      <Route  exact path={`${url}`} component={Favour}/>
 
         <Route  path={`${url}/history`} component={History1}/>
 
@@ -162,4 +146,5 @@ History
     )
 }
 
+export default History
 

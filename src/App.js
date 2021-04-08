@@ -42,7 +42,14 @@ const [state,dispatch]=useReducer(reducer,initialdata);
 <Route path="/login" exact component={Input}/>
 <Route path="/signup" exact component={Signup}/>
 <Route path="/dashboard" exact component={Dashboard}/>
-
+<Route path="/listproperty"  component={Listproperty}/>
+<Route path="/postProperty"  component={ PostProperty}/>
+<Route path="/adminDashboard"  component={ AdminDashboard}/>
+<Route path={`/filters`}  component={Filters}/>
+<Route path={`/detail`}  component={Detail}/>
+<Route path={`/radius`}  component={Radius}/>
+<Route path={`/favourite`} component={History}/>
+<Route path={`/mylist`} component={ Mylist}/>
 </consumerdata.Provider>
      </Switch>
    </Router>

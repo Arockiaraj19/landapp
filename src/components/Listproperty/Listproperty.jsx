@@ -121,7 +121,6 @@ Offers
         <Route  path={`${url}/request`} component={Request}/>
 
         <Route  path={`${url}/upcoming_visits`} component={Upcomingvisits}/>
-
         <Route  path={`${url}/offers`} component={Offers}/>
     </Switch>
 
