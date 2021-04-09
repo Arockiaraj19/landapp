@@ -207,6 +207,8 @@ const ChildDashboard = () => {
     } else {
       console.log("ithu filter data");
       console.log(Object.assign(consumer.data.filter, { meter: consumer.data.radius }));
+
+      
       const responce = await axios.get(`${host}api/property`,
 
         {
