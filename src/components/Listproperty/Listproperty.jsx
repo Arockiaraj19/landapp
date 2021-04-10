@@ -87,7 +87,7 @@ My Listed Property
    color: kblue,
    borderBottom: "3px solid #007BFF"
   }} to={`${url}/house`}>
-Shedule Open house
+schedule Open house
 </NavLink>
 <NavLink  className={classes.nav} activeStyle={{
    

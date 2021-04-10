@@ -241,14 +241,14 @@ const getlocation=(e)=>{
             >
                 <Grid  container className={classes.grid} spacing={4} >
                 <Grid item  xs={12} sm={6} md={6}>
-                <Typography>Email/Username</Typography>
+                <Typography>Name of the property</Typography>
          <TextValidator
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            validators={['required', 'isEmail']}
-            errorMessages={['this field is required', 'email is not valid']}
+            validators={['required']}
+            errorMessages={['this field is required']}
             label="Email Address"
             name="email"
             autoComplete="email"
@@ -311,9 +311,9 @@ Choose on map
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>
-          <option value={3}>4</option>
-          <option value={3}>5</option>
-          <option value={3}>6</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
+          <option value={6}>6</option>
         </Select>
       </FormControl>
                     </Grid>
@@ -335,9 +335,9 @@ Choose on map
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>
-          <option value={3}>4</option>
-          <option value={3}>5</option>
-          <option value={3}>6</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
+          <option value={6}>6</option>
         </Select>
       </FormControl>
                     </Grid>
@@ -359,9 +359,9 @@ Choose on map
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>
-          <option value={3}>4</option>
-          <option value={3}>5</option>
-          <option value={3}>6</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
+          <option value={6}>6</option>
         </Select>
       </FormControl>
                     </Grid>

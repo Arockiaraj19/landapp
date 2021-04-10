@@ -93,14 +93,14 @@ history.push("/dashboard");
           <Grid item xs={12} sm={6} md={6}>
             <Typography>Select Number Of Bedrooms</Typography>
             <FormControl variant="outlined" className={classes.formControl}>
-              <InputLabel htmlFor="outlined-age-native-simple">1</InputLabel>
+              <InputLabel htmlFor="outlined-age-native-simple">Select Number Of Bedrooms</InputLabel>
               <Select
                 native
                 value={bedroom}
                 onChange={(val)=>setbedroom(val.target.value)}
-                label="Age"
+                label="Select Number of Bedrooms"
                 inputProps={{
-                  name: 'age',
+                 
                   id: 'outlined-age-native-simple',
                 }}
               >
@@ -114,14 +114,14 @@ history.push("/dashboard");
           <Grid item xs={12} sm={6} md={6}>
             <Typography>Select Number Of Bathrooms</Typography>
             <FormControl variant="outlined" className={classes.formControl}>
-              <InputLabel htmlFor="outlined-age-native-simple">Age</InputLabel>
+              <InputLabel htmlFor="outlined-age-native-simple">Select Number Of Bathrooms</InputLabel>
               <Select
                 native
                 value={bathroom}
                 onChange={(val)=>setbathroom(val.target.value)}
-                label="Age"
+                label="Select Number of Bathrooms"
                 inputProps={{
-                  name: 'age',
+                 
                   id: 'outlined-age-native-simple',
                 }}
               >
@@ -135,14 +135,14 @@ history.push("/dashboard");
           <Grid item xs={12} sm={6} md={6}>
             <Typography>Select Property Type</Typography>
             <FormControl variant="outlined" className={classes.formControl}>
-              <InputLabel htmlFor="outlined-age-native-simple">Age</InputLabel>
+              <InputLabel htmlFor="outlined-age-native-simple">Select Property Type</InputLabel>
               <Select
                 native
                 value={propertytype}
                 onChange={(val)=>setpropertytype(val.target.value)}
-                label="Age"
+                label="Select Property Type"
                 inputProps={{
-                  name: 'age',
+               
                   id: 'outlined-age-native-simple',
                 }}
               >

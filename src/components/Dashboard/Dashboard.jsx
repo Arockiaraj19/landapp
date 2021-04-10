@@ -20,6 +20,10 @@ import {
   Link,
   useRouteMatch
 } from "react-router-dom";
+import SearchIcon from '@material-ui/icons/Search';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
 const useStyles = makeStyles((theme) => ({
   heading: {
     fontWeight: 700,
@@ -309,7 +313,13 @@ function showError(error) {
     <>
       <Container className={classes.container} maxWidth="md">
 
-        <TextField className={classes.input} id="outlined-basic" label="Outlined" variant="outlined" />
+        <TextField  InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }} className={classes.input} id="outlined-basic" label="Search eg.type property location" variant="outlined" />
         <Button className={classes.btn} onClick={getloc} size="small" variant="contained" color="secondary">
           Use Current Location
           

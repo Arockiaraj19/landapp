@@ -177,6 +177,10 @@ export default Detail
 function Images(props) {
     var items =props.images;
     const classes = useStyles();
+    useEffect(()=>{
+console.log("props kku correct varuthaa");
+console.log(props.data);
+    },[]);
     return (
         <>
           < Header/>
@@ -411,7 +415,7 @@ builder
     
     </div>
                <Button  variant="contained" className={classes.footerbtn} cla color="secondary">
- Shedule/Request
+ schedule/Request
 </Button>
     </Grid>
     </Container>

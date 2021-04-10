@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   return (
     <div>
     <Button onClick={handleOpen} className={classes.btn1} variant="contained" color="secondary">
- Shedule/Request
+ schedule/Request
 </Button>
       <Modal
         open={open}

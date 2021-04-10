@@ -89,6 +89,9 @@ function History1() {
 const consumer=useContext(consumerdata);
 useEffect(async() => {
   const responce=await axios.get(`${host}api/history`,{
+    data:{
+
+    },
     headers:{
       "authorization":consumer.data.token,
     }

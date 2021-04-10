@@ -9,6 +9,10 @@ import Header from "../Header/Header"
 import { useHistory } from "react-router-dom";
 import { consumerdata } from "../../App"
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import SearchIcon from '@material-ui/icons/Search';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
 const useStyles = makeStyles((theme) => ({
   grid: {
     margin: theme.spacing(4, 0, 4, 0),
@@ -156,7 +160,13 @@ const onUnmount = React.useCallback(function callback(map) {
           valueLabelDisplay="on"
         />
         <Grid container className={classes.grid} spacing={1}>
-          <TextField size={"small"} className={classes.input} id="outlined-basic" label="Search eg.your live location" variant="outlined" />
+          <TextField  InputProps={{
+          startAdornment: (
+            <InputAdornment position="end">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }} size={"small"} className={classes.input} id="outlined-basic" label="Search eg.your live location" variant="outlined" />
           <Button className={classes.btn1} onClick={getloc} variant="contained" color="secondary">
             Use Current Location
             

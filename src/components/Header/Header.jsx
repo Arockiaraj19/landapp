@@ -7,8 +7,10 @@ import {Modal,Avatar,Container,TextField,Button,Typography,Grid,Card,CardContent
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 import { AppBar } from '@material-ui/core';
+
 import img from "../logo.png"
 import {useRouteMatch} from "react-router-dom"
+
 const useStyles = makeStyles((theme) => ({
   
     flex:{
@@ -44,8 +46,8 @@ const nextpage1=()=>{
 }
     return (
         <>
+        <AppBar elevation={0}  position="fixed" style={{height:"12%",backgroundColor:"#EAEAEA"}}>
 
-<main className={style.main}>
 <header className={style.header}>
     {/* <div  ></div> */}
     <img onClick={nextpage} className={style.avatar1} src={img} alt="logoimage"/>
@@ -70,10 +72,11 @@ const nextpage1=()=>{
     </div>
       
     </header>
-</main>
+    </AppBar>
 <div className={style.space}>
 
 </div>
+
         </>
     )
 }

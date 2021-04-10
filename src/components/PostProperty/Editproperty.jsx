@@ -267,14 +267,14 @@ const getlocation=(e)=>{
             >
                 <Grid  container className={classes.grid} spacing={4} >
                 <Grid item  xs={12} sm={6} md={6}>
-                <Typography>Email/Username</Typography>
+                <Typography>Name of the property</Typography>
          <TextValidator
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            validators={['required', 'isEmail']}
-            errorMessages={['this field is required', 'email is not valid']}
+            validators={['required']}
+            errorMessages={['this field is required']}
             label="Email Address"
             name="email"
             autoComplete="email"

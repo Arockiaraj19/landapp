@@ -79,23 +79,24 @@ function Openhouse(props) {
   
     const submit=async(e)=>{
       e.preventDefault();
+      console.log(props);
     
-      const responce=await axios.post(`${host}api/schedule`,{
-        sellerId:props.data.sellerId,
-        propertyId:props.data._id,
-        firstname,
-        lastname,
-        email,
-        phone:number,
-        address,
-        type,
-        time:selectedDate,
-      },{
-        headers:{
-          "authorization":consumer.data.token,
-        }
-      });
-      console.log(responce);
+      // const responce=await axios.post(`${host}api/schedule`,{
+      //   sellerId:props.data.sellerId,
+      //   propertyId:props.data._id,
+      //   firstname,
+      //   lastname,
+      //   email,
+      //   phone:number,
+      //   address,
+      //   type,
+      //   time:selectedDate,
+      // },{
+      //   headers:{
+      //     "authorization":consumer.data.token,
+      //   }
+      // });
+      // console.log(responce);
     }
 
 
@@ -107,13 +108,13 @@ function Openhouse(props) {
     return (
         <>
              <Container className={classes.cardGrid} maxWidth="md">
-     <p className={classes.p}>Shedule open house</p>
+     <p className={classes.p}>schedule open house</p>
 
 {/* first part */}
 
      <Grid container className={classes.grid} >
      <Grid item  xs={6} sm={4} md={4}>
-     <p >Selet type</p>
+     <p >Select type</p>
 
      </Grid>
      <Grid item  xs={6} sm={6} md={6}>
@@ -141,7 +142,7 @@ function Openhouse(props) {
      <Grid item  xs={6} sm={6} md={6}>
      <Grid container className={classes.grid} >
      <Grid item  xs={6} sm={6} md={6}>
-     <p >Selet Date</p>
+     <p >Select Date</p>
          </Grid>
          <Grid item  xs={6} sm={6} md={6}>
          <KeyboardDatePicker
@@ -162,7 +163,7 @@ function Openhouse(props) {
      <Grid item  xs={6} sm={6} md={6}>
      <Grid container  spacing={5} className={classes.grid} >
      <Grid item  xs={6} sm={6} md={6}>
-     <p >Selet Time</p>
+     <p >Select Time</p>
          </Grid>
          <Grid item  xs={6} sm={6} md={6}>
          <KeyboardTimePicker
