@@ -80,7 +80,7 @@ const [password,setpassword]=useState("");
         email,password
       });
  if(responce.status===200){
-   console.log(responce.data);
+
 consumer.setdata({type:"LOGIN",userid:responce.data.userId,token:responce.data.token,firstname:responce.data.firstname,lastname:responce.data.lastname});
 history.push("/dashboard");
  }else{

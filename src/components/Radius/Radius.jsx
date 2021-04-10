@@ -8,6 +8,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import Header from "../Header/Header"
 import { useHistory } from "react-router-dom";
 import { consumerdata } from "../../App"
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 const useStyles = makeStyles((theme) => ({
   grid: {
     margin: theme.spacing(4, 0, 4, 0),
@@ -58,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Radius() {
   const history = useHistory();
+  const [location, setlocation] = useState({});
   const nextpage = () => {
     history.push("/dashboard");
   }
@@ -77,11 +79,32 @@ function Radius() {
 
   ];
 
+  
+  const getloc=()=>{
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+     alert("Geolocation is not supported by this browser.") ;
+    }
+  }
+
+  
+  function showPosition(position) {
+   console.log(position.coords.latitude);
+     console.log(position.coords.longitude);
+setlocation(  {
+    latitude:position.coords.latitude,
+    longitude: position.coords.longitude,
+     
+    });
+  }
+
   const classes = useStyles();
   const consumer = useContext(consumerdata);
   const submitdata = () => {
     console.log(radius);
     consumer.setdata({ type: "RADIUS", value: radius });
+    consumer.setdata({ type: "LOCATION", value:location });
     history.push("/dashboard");
 
   }
@@ -92,6 +115,32 @@ useEffect(() => {
   }
 }, [])
 
+
+const containerStyle = {
+  width: '100%',
+  height: '100%'
+};
+
+const center = {
+  lat: 13.0827,
+  lng: 80.2707
+};
+const { isLoaded } = useJsApiLoader({
+  id: 'google-map-script',
+  googleMapsApiKey: "AIzaSyBf2DbsdghCYjH5f9AgKQAHRQLeBgOrawE"
+})
+
+const [map, setMap] = React.useState(null)
+
+const onLoad = React.useCallback(function callback(map) {
+  const bounds = new window.google.maps.LatLngBounds();
+  map.fitBounds(bounds);
+  setMap(map)
+}, [])
+
+const onUnmount = React.useCallback(function callback(map) {
+  setMap(null)
+}, [])
   return (
     <>
   < Header/>
@@ -108,13 +157,29 @@ useEffect(() => {
         />
         <Grid container className={classes.grid} spacing={1}>
           <TextField size={"small"} className={classes.input} id="outlined-basic" label="Search eg.your live location" variant="outlined" />
-          <Button className={classes.btn1} variant="contained" color="secondary">
+          <Button className={classes.btn1} onClick={getloc} variant="contained" color="secondary">
             Use Current Location
             
 </Button>
         </Grid>
         <Container className={style.map} maxWidth="md">
+        {
+  isLoaded ? (
+    <GoogleMap
+      mapContainerStyle={containerStyle}
+      center={center}
+      zoom={14}
+      onLoad={onLoad}
+      onUnmount={onUnmount}
+     
+    >
+      { /* Child components, such as markers, info windows, etc. */ }
+      <></>
+    </GoogleMap>
+) : <></>
 
+
+}  
         </Container>
         <Grid container className={classes.grid1} spacing={1}>
           <Button onClick={nextpage} className={classes.btn} variant="contained" color="secondary">

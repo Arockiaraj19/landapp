@@ -206,14 +206,14 @@ const ChildDashboard = () => {
       history.push("/login")
     } else {
       console.log("ithu filter data");
-      console.log(Object.assign(consumer.data.filter, { meter: consumer.data.radius }));
+      console.log(Object.assign(consumer.data.filter, { radius: consumer.data.radius },consumer.data.location));
 
-      
+
       const responce = await axios.get(`${host}api/property`,
 
         {
           data: {
-            filter:Object.assign(consumer.data.filter, { meter: consumer.data.radius }),
+            filter:Object.assign(consumer.data.filter, { radius: consumer.data.radius },consumer.data.location),
           },
           headers: {
             "authorization": consumer.data.token,

@@ -21,6 +21,7 @@ const initialdata={
   },
   radius:0,
   edit:{},
+  location:{}
 }
 
 
@@ -43,6 +44,10 @@ const reducer =(state,action)=>{
         return {
           ...state,edit:action.value,
         }
+        case "LOCATION":
+          return {
+            ...state,location:action.value,
+          }
     default:
      return state;
   }
