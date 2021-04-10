@@ -24,6 +24,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Pagination from '@material-ui/lab/Pagination';
 const useStyles = makeStyles((theme) => ({
   heading: {
     fontWeight: 700,
@@ -105,11 +106,11 @@ function Dashboard() {
   const classes = useStyles();
   let history = useHistory()
   let consumer = useContext(consumerdata)
-  useEffect(() => {
-    if (consumer.data.token == null) {
-      history.push("/login")
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (consumer.data.token == null) {
+  //     history.push("/")
+  //   }
+  // }, [])
 
   let { path, url } = useRouteMatch();
 
@@ -207,7 +208,7 @@ const ChildDashboard = () => {
   useEffect(async () => {
 
     if (consumer.data.token == null) {
-      history.push("/login")
+      // history.push("/")
     } else {
       console.log("ithu filter data");
       console.log(Object.assign(consumer.data.filter, { radius: consumer.data.radius },consumer.data.location));
@@ -230,6 +231,12 @@ const ChildDashboard = () => {
     }
 
   }, []);
+
+  const [page, setPage] =useState(1);
+  const [count, setcount] =useState(10);
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
 
   const locations = [
     {
@@ -431,6 +438,7 @@ function showError(error) {
             </Grid>
           ))}
         </Grid>
+        {/* <Pagination count={10} page={page} onChange={handleChange} color="secondary" /> */}
       </Container>
     </>
   )

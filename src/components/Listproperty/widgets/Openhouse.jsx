@@ -79,24 +79,25 @@ function Openhouse(props) {
   
     const submit=async(e)=>{
       e.preventDefault();
-      console.log(props);
+      console.log(consumer.data.detail);
+      console.log(selectedDate);
     
-      // const responce=await axios.post(`${host}api/schedule`,{
-      //   sellerId:props.data.sellerId,
-      //   propertyId:props.data._id,
-      //   firstname,
-      //   lastname,
-      //   email,
-      //   phone:number,
-      //   address,
-      //   type,
-      //   time:selectedDate,
-      // },{
-      //   headers:{
-      //     "authorization":consumer.data.token,
-      //   }
-      // });
-      // console.log(responce);
+      const responce=await axios.post(`${host}api/schedule`,{
+        sellerId:consumer.data.detail.sellerId,
+        propertyId:consumer.data.detail._id,
+        firstname,
+        lastname,
+        email,
+        phone:number,
+        address,
+        type,
+        time:selectedDate,
+      },{
+        headers:{
+          "authorization":consumer.data.token,
+        }
+      });
+      console.log(responce);
     }
 
 
@@ -108,7 +109,7 @@ function Openhouse(props) {
     return (
         <>
              <Container className={classes.cardGrid} maxWidth="md">
-     <p className={classes.p}>schedule open house</p>
+     <p className={classes.p}>Schedule open house</p>
 
 {/* first part */}
 

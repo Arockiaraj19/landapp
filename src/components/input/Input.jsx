@@ -76,7 +76,7 @@ const [password,setpassword]=useState("");
       e.preventDefault();
       console.log(email);
       console.log(password);
-      const responce=await axios.post(`${host}api/auth/login`,{
+      const responce=await axios.post(`${host}api/auth/`,{
         email,password
       });
  if(responce.status===200){
@@ -133,10 +133,6 @@ history.push("/dashboard");
             validators={['required']}
             errorMessages={['this field is required']}
             onChange={(val)=>setpassword(val.target.value)}
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
           />
            <Grid container className={classes.gridbtn1}>
            <Grid item >

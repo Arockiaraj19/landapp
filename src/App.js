@@ -21,7 +21,8 @@ const initialdata={
   },
   radius:0,
   edit:{},
-  location:{}
+  location:{},
+  detail:{},
 }
 
 
@@ -48,6 +49,10 @@ const reducer =(state,action)=>{
           return {
             ...state,location:action.value,
           }
+          case "DETAIL":
+            return {
+              ...state,detail:action.value,
+            }
     default:
      return state;
   }
@@ -59,7 +64,7 @@ const [state,dispatch]=useReducer(reducer,initialdata);
    <Router>
      <Switch>
        <consumerdata.Provider value={{data:state,setdata:dispatch}}>
-<Route path="/login" exact component={Input}/>
+<Route path="/" exact component={Input}/>
 <Route path="/signup" exact component={Signup}/>
 <Route path="/dashboard" exact component={Dashboard}/>
 <Route path="/listproperty"  component={Listproperty}/>

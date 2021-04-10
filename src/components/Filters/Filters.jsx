@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 function Filters() {
 useEffect(() => {
   if (consumer.data.token == null) {
-    history.push("/login")
+    history.push("/")
   }
  
 }, [])
@@ -104,7 +104,7 @@ history.push("/dashboard");
                   id: 'outlined-age-native-simple',
                 }}
               >
-                <option aria-label="None" value="" />
+                
                 <option value={1}>1</option>
                 <option value={2}>2</option>
                 <option value={3}>3</option>
@@ -125,7 +125,7 @@ history.push("/dashboard");
                   id: 'outlined-age-native-simple',
                 }}
               >
-                <option aria-label="None" value="" />
+                
                 <option value={1}>1</option>
                 <option value={2}>2</option>
                 <option value={3}>3</option>
@@ -146,7 +146,7 @@ history.push("/dashboard");
                   id: 'outlined-age-native-simple',
                 }}
               >
-                <option aria-label="None" value="" />
+                
                 <option value={1}>1</option>
                 <option value={2}>2</option>
                 <option value={3}>3</option>

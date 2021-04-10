@@ -108,7 +108,7 @@ function Detail() {
     const classes = useStyles();
     useEffect(async() => {
       if (consumer.data.token == null) {
-        history.push("/login")
+        history.push("/")
       }
      var url=new URLSearchParams(window.location.search);
      const responce=await axios.get(`${host}api/property/find/${url.get("id")}`,  {
@@ -118,6 +118,7 @@ function Detail() {
     
     console.log(responce.data.property);
     setproperty(responce.data.property);
+    consumer.setdata({type:"DETAIL",value:responce.data.property});
      
     }, [])
 
@@ -127,7 +128,7 @@ function Detail() {
 
     return (
         <>
-         
+            < Header/>
             <Container  maxWidth="md">
             <Grid container className={classes.paper} spacing={2}>
             <Grid item  xs={4} sm={2} md={2}>
@@ -183,7 +184,7 @@ console.log(props.data);
     },[]);
     return (
         <>
-          < Header/>
+       
           <Container  maxWidth="md">
           <Grid container className={classes.paper} spacing={2}>
           <Grid item  xs={12} sm={8} md={8}>

@@ -49,7 +49,7 @@ function Mylist() {
   const consumer=useContext(consumerdata);
   useEffect(() => {
     if (consumer.data.token == null) {
-      history.push("/login")
+      history.push("/")
     }
   }, [])
   let { path, url } = useRouteMatch();

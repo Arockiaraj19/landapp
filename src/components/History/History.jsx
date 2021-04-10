@@ -60,7 +60,7 @@ function History() {
   const consumer=useContext(consumerdata);
   useEffect(() => {
     if (consumer.data.token == null) {
-      history.push("/login")
+      history.push("/")
     }
    
   }, [])

@@ -118,7 +118,7 @@ setlicence(responce.data);
       });
       if(responce.status==200){
 alert("you registered successfully");
-history.push("/login");
+history.push("/");
       }else{
         alert("something wrong");
       }
@@ -257,7 +257,7 @@ size={"small"}
             required
             fullWidth
             id="password"
-           
+           type="password"
             label=""
             name="lastname"
             autoComplete="lastname"
@@ -276,6 +276,7 @@ size={"small"}
             margin="normal"
             required
             fullWidth
+            type="password"
             id="password"
             label=""
             name="lastname"

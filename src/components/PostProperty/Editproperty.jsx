@@ -162,7 +162,7 @@ const showmap=()=>{
 
 useEffect(() => {
   if (consumer.data.token == null) {
-    history.push("/login")
+    history.push("/")
   }
    setemail(consumer.data.edit.name);
    setbathroom(consumer.data.edit.bathrooms);
@@ -333,7 +333,7 @@ Choose on map
             id: 'outlined-age-native-simple',
           }}
         >
-          <option aria-label="None" value="" />
+          
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>
@@ -357,7 +357,7 @@ Choose on map
             id: 'outlined-age-native-simple',
           }}
         >
-          <option aria-label="None" value="" />
+          
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>
@@ -381,7 +381,7 @@ Choose on map
             id: 'outlined-age-native-simple',
           }}
         >
-          <option aria-label="None" value="" />
+          
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>

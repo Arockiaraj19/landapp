@@ -119,7 +119,7 @@ console.log(imagedata);
 
 useEffect(() => {
   if (consumer.data.token == null) {
-    history.push("/login")
+    history.push("/")
   }
 }, []);
 
@@ -307,7 +307,7 @@ Choose on map
             id: 'outlined-age-native-simple',
           }}
         >
-          <option aria-label="None" value="" />
+         
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>
@@ -331,7 +331,7 @@ Choose on map
             id: 'outlined-age-native-simple',
           }}
         >
-          <option aria-label="None" value="" />
+          
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>
@@ -355,7 +355,7 @@ Choose on map
             id: 'outlined-age-native-simple',
           }}
         >
-          <option aria-label="None" value="" />
+          
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>

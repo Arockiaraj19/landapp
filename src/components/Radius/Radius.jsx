@@ -115,7 +115,7 @@ setlocation(  {
   const [radius, setradius] = useState(0);
 useEffect(() => {
   if (consumer.data.token == null) {
-    history.push("/login")
+    history.push("/")
   }
 }, [])
 
