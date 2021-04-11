@@ -117,6 +117,7 @@ setlicence(responce.data);
         firstname,lastname,email,dob,password,profilePic:"https://source.unsplash.com/random",licensePic:"https://source.unsplash.com/random"
       });
       if(responce.status==200){
+        console.log(responce);
 alert("you registered successfully");
 history.push("/");
       }else{
@@ -257,7 +258,6 @@ size={"small"}
             required
             fullWidth
             id="password"
-           type="password"
             label=""
             name="lastname"
             autoComplete="lastname"
@@ -265,7 +265,7 @@ size={"small"}
             errorMessages={['this field is required']}
             value={password}
             autoFocus
-            onChange={(val)=>setpassword(val.target.value)}
+            onChange={(val)=>setpassword(val.target.value.trim())}
           />  
               </Grid>
               <Grid item  xs={6} sm={6} md={6}>
@@ -276,7 +276,7 @@ size={"small"}
             margin="normal"
             required
             fullWidth
-            type="password"
+         
             id="password"
             label=""
             name="lastname"
@@ -285,7 +285,7 @@ size={"small"}
             validators={['isPasswordMatch', 'required']}
             errorMessages={['password mismatch', 'this field is required']}
             value={rpassword}
-            onChange={(val)=>setrpassword(val.target.value)}
+            onChange={(val)=>setrpassword(val.target.value.trim())}
           />  
               </Grid>
 

@@ -7,6 +7,7 @@ import axios from "axios"
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {consumerdata} from "../../App"
 import { useHistory } from 'react-router';
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -69,18 +70,21 @@ function Input() {
   let history=useHistory();
 const [email,setemail]=useState("");
 const [password,setpassword]=useState("");
+const [isloading,setloading]=useState(false);
 
     const classes = useStyles();
 
     const submit=async(e)=>{
       e.preventDefault();
+      setloading(true);
       console.log(email);
       console.log(password);
-      const responce=await axios.post(`${host}api/auth/`,{
+      const responce=await axios.post(`${host}api/auth`,{
         email,password
       });
  if(responce.status===200){
-
+setloading(false);
+console.log(responce);
 consumer.setdata({type:"LOGIN",userid:responce.data.userId,token:responce.data.token,firstname:responce.data.firstname,lastname:responce.data.lastname});
 history.push("/dashboard");
  }else{
