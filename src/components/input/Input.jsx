@@ -78,10 +78,11 @@ const [isloading,setloading]=useState(false);
       e.preventDefault();
       setloading(true);
       console.log(email);
-      console.log(password);
+      console.log(password.length);
       const responce=await axios.post(`${host}api/auth`,{
         email,password
       });
+      console.log(responce);
  if(responce.status===200){
 setloading(false);
 console.log(responce);
@@ -136,7 +137,7 @@ history.push("/dashboard");
             autoComplete="current-password"
             validators={['required']}
             errorMessages={['this field is required']}
-            onChange={(val)=>setpassword(val.target.value)}
+            onChange={(val)=>setpassword(val.target.value.trim())}
           />
            <Grid container className={classes.gridbtn1}>
            <Grid item >

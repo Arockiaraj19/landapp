@@ -112,7 +112,7 @@ setlicence(responce.data);
     const submit=async(e)=>{
    
       e.preventDefault();
-      
+      console.log(password.length);
       const responce=await axios.post(`${host}api/auth/register`,{
         firstname,lastname,email,dob,password,profilePic:"https://source.unsplash.com/random",licensePic:"https://source.unsplash.com/random"
       });
