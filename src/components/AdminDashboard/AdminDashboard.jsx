@@ -7,6 +7,7 @@ import EditLocationOutlinedIcon from '@material-ui/icons/EditLocationOutlined';
 import Accepted from "./Accepted"
 import Bending from "./Bending"
 import Header from "../Header/Header"
+import centre from "./centre"
 import {
     BrowserRouter as Router,
     Switch,
@@ -45,9 +46,9 @@ const useStyles = makeStyles((theme) => ({
 function AdminDashboard() {
     const consumer=useContext(consumerdata);
     useEffect(() => {
-        if (consumer.data.token == null) {
-            history.push("/")
-          }
+        // if (consumer.data.token == null) {
+        //     history.push("/")
+        //   }
        
     }, [])
     const history=useHistory();
@@ -97,7 +98,13 @@ Accepted properties
 Bending properties
 </NavLink>
 
-
+<NavLink  className={classes.nav} activeStyle={{
+   
+   color: kblue,
+   borderBottom: "3px solid #007BFF",
+  }} to={`${url}/centre`}>
+Resource centre
+</NavLink>
 
 
 
@@ -109,7 +116,7 @@ Bending properties
         <Route exact path={`${url}`}component={Accepted}/>
 
         <Route path={`${url}/bending`} component={Bending}/>
-
+        <Route path={`${url}/centre`} component={centre}/>
         
     </Switch>
 

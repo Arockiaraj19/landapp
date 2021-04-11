@@ -208,7 +208,7 @@ const ChildDashboard = () => {
   useEffect(async () => {
 
     if (consumer.data.token == null) {
-      // history.push("/")
+   history.push("/")
     } else {
       console.log("ithu filter data");
       console.log(Object.assign(consumer.data.filter, { radius: consumer.data.radius },consumer.data.location));

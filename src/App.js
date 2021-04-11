@@ -1,5 +1,5 @@
 
-import { PostProperty,Signup,Input,Dashboard,Filters,Detail ,Radius,Listproperty,AdminDashboard,Mylist,History,Editproperty} from './components';
+import {Profile, PostProperty,Signup,Input,Dashboard,Filters,Detail ,Radius,Listproperty,AdminDashboard,Mylist,History,Editproperty} from './components';
 import {
   BrowserRouter as Router,
   Switch,
@@ -65,6 +65,7 @@ const [state,dispatch]=useReducer(reducer,initialdata);
      <Switch>
        <consumerdata.Provider value={{data:state,setdata:dispatch}}>
 <Route path="/" exact component={Input}/>
+<Route path="/profile" exact component={Profile}/>
 <Route path="/signup" exact component={Signup}/>
 <Route path="/dashboard" exact component={Dashboard}/>
 <Route path="/listproperty"  component={Listproperty}/>

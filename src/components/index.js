@@ -10,3 +10,4 @@ export { default as Mylist} from './Mylist/Mylist';
 export { default as History} from './History/History';
 export { default as PostProperty} from './PostProperty/PostProperty';
 export { default as Editproperty} from './PostProperty/Editproperty';
+export { default as Profile} from './Profile/Profile';
