@@ -7,4 +7,4 @@ export  const kdartblue="#343A40";
 export  const kgreen="#28A745";
 
 // export const host="https://realestate-be.herokuapp.com/";
-export const host="http://localhost:80/";
+ export const host="http://localhost:80/";

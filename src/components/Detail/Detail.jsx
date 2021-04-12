@@ -15,6 +15,7 @@ import axios from "axios"
 import {host} from "../colors"
 import {consumerdata} from "../../App"
 import { BrowserRouter, useHistory } from "react-router-dom";
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 const useStyles = makeStyles((theme) => ({
     paper: {
  
@@ -107,9 +108,9 @@ function Detail() {
   const consumer=useContext(consumerdata);
     const classes = useStyles();
     useEffect(async() => {
-      if (consumer.data.token == null) {
-        history.push("/")
-      }
+      // if (consumer.data.token == null) {
+      //   history.push("/")
+      // }
      var url=new URLSearchParams(window.location.search);
      const responce=await axios.get(`${host}api/property/find/${url.get("id")}`,  {
       headers:{
@@ -122,7 +123,10 @@ function Detail() {
      
     }, [])
 
-
+const [icon,seticon]=useState(true);
+const addfav=()=>{
+  seticon(!icon);
+}
 
 
 
@@ -158,7 +162,7 @@ function Detail() {
                 </Grid>
                 <Grid item xs={4} sm={2} md={2}>
                <Grid container>
-               <FavoriteIcon className={classes.icon} />
+               {icon===true ? <FavoriteIcon onClick={addfav}  className={classes.icon} />:<FavoriteBorderIcon onClick={addfav} className={classes.icon} />}  
     <div className={style.fav}>Saved to favourites</div>
                </Grid>
                 </Grid>
@@ -338,22 +342,29 @@ const Paragraph=({data})=>{
 let data1="A paragraph is a series of related A paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argument sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argumentA paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argumentA paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argumentA paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argumentA paragraph is a series of related sentences developing a central idea, called the topic. Try to think about paragraphs in terms of thematic unity: a paragraph is a sentence or a group of sentences that supports one central, unified idea. Paragraphs add one idea at a time to your broader argument";
 
     const consumer=useContext(consumerdata);
-const addfav=async(sellerid,propertyid)=>{
+// const addfav=async(sellerid,propertyid)=>{
+//   seticon(!icon);
     
-  const responce = await axios.post(`${host}api/userlist`,
-  {
-    propertyId: propertyid,
-    sellerId:sellerid,
-    buyerId:consumer.data.userid,
+//   const responce = await axios.post(`${host}api/userlist`,
+//   {
+//     propertyId: propertyid,
+//     sellerId:sellerid,
+//     buyerId:consumer.data.userid,
 
-  },
-  {
-    headers: {
-      "authorization": consumer.data.token,
-    }
-  });
-console.log(responce);
+//   },
+//   {
+//     headers: {
+//       "authorization": consumer.data.token,
+//     }
+//   });
+// console.log(responce);
+// }
+const [icon,seticon]=useState(false);
+const addfav=()=>{
+  console.log("working");
+  seticon(!icon);
 }
+
     return (
 <>
 <Container  maxWidth="md">
@@ -410,9 +421,9 @@ builder
     </Container>
 
     <Grid container className={classes.footer}>
-    <div onClick={()=>addfav(data.sellerId,data._id)}  className={classes.footer}>
-               <FavoriteIcon className={classes.icon} />
-    <div className={style.fav}>Save for later</div>
+    <div   className={classes.footer}>
+             {icon===true ? <FavoriteIcon onClick={addfav}  className={classes.icon} />:<FavoriteBorderIcon onClick={addfav} className={classes.icon} />}  
+    <div  className={style.fav}>Save for later</div>
     
     </div>
                <Button  variant="contained" className={classes.footerbtn} cla color="secondary">
