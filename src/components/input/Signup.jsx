@@ -83,11 +83,10 @@ const [licensePic,setlicence]=useState("");
     console.log("upload profile");
     const data = new FormData();
     console.log(event.target.files[0]);
-    data.append('image', event.target.files[0]);
-   const responce=await axios.post(`${host}api/upload/profile`, {
-    image: data
-   });
-      setprofile(responce.data);
+    data.append('file', event.target.files[0]);
+   const responce=await axios.post(`${host}api/upload/profile`, data
+  );
+      setprofile(responce.data.path);
       console.log(responce);
   }
 
@@ -95,16 +94,15 @@ const [licensePic,setlicence]=useState("");
 
   const uploadlicence=async(event)=>{
     console.log("upload licence");
+    console.log( event.target.files[0]);
     const data = new FormData();
-    data.append('image', event.target.files[0]);
+    data.append('file', event.target.files[0]);
 
-   const responce=await axios.post(`${host}api/upload/license`, {
-    image: data
-   });
+   const responce=await axios.post(`${host}api/upload/license`, data);
     
-setlicence(responce.data);
+setlicence(responce.data.path);
       console.log(responce);
-  }
+   }
 
 
 
@@ -114,7 +112,7 @@ setlicence(responce.data);
       e.preventDefault();
       console.log(password.length);
       const responce=await axios.post(`${host}api/auth/register`,{
-        firstname,lastname,email,dob,password,profilePic:"https://source.unsplash.com/random",licensePic:"https://source.unsplash.com/random"
+        firstname,lastname,email,dob,password,profilePic:profilePic,licensePic:licensePic
       });
       if(responce.status==200){
         console.log(responce);

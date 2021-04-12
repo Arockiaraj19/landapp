@@ -92,7 +92,7 @@ function PostProperty() {
    const consumer=useContext(consumerdata);
     
 
-      const [imagedata,setimage]=useState([])
+      const [propertypic,setpropertypic]=useState([])
       const [imagedata1,setimage1]=useState([])
       const [imagepath,setimagepath]=useState([])
       const [istrue,setistrue]=useState(false)
@@ -105,10 +105,13 @@ function PostProperty() {
         data.append('file', event.target.files[0]);
     
        const responce=await axios.post(`${host}api/upload/property`, data);
-       setimagepath(imagepath=>[...imagepath,responce.data]);
-        setimage(imagedata=>[...imagedata,URL.createObjectURL(event.target.files[0])]);
-console.log(event);
-console.log(imagedata);
+       console.log(responce);
+
+const returndata=await axios.get(`${host}api/upload/image/${responce.data.path}`);
+ console.log(returndata.data);       
+     setpropertytype(propertypic=>[...propertypic,returndata.data]);
+      // //   setimage(imagedata=>[...imagedata,URL.createObjectURL(event.target.files[0])]);
+
       }
 
 
@@ -509,7 +512,7 @@ third part */}
 
 <div className={classes.udiv}>
 {
- imagedata.map((file,index)=>(<section className={classes.section}>
+ propertypic.map((file,index)=>(<section  className={classes.section}>
 <img className={classes.uimg} src={file} alt={index}/>
 <div className={classes.imagebottom}>
 <FormControlLabel

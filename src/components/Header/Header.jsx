@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import style from "./Header.module.css"
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -10,6 +10,8 @@ import { AppBar } from '@material-ui/core';
 
 import img from "../logo.png"
 import {useRouteMatch} from "react-router-dom"
+import {consumerdata} from "../../App"
+
 
 const useStyles = makeStyles((theme) => ({
   
@@ -47,6 +49,12 @@ const nextpage1=()=>{
 const nextpage2=()=>{
   history.push(`/profile`);
 }
+
+let consumer=useContext(consumerdata);
+const logout=()=>{
+consumer.setdata({type:"LOGIN",userid:null,token:null,firstname:null,lastname:null});
+history.push(`/`);
+}
     return (
         <>
         <AppBar elevation={0}  position="fixed" style={{height:"12%",backgroundColor:"#EAEAEA"}}>
@@ -69,7 +77,7 @@ const nextpage2=()=>{
       >
         <MenuItem onClick={nextpage1}>My account</MenuItem>
         <MenuItem onClick={nextpage2}>Settings</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={logout}>Logout</MenuItem>
       </Menu>
     </div>
     </div>

@@ -108,9 +108,9 @@ function Detail() {
   const consumer=useContext(consumerdata);
     const classes = useStyles();
     useEffect(async() => {
-      // if (consumer.data.token == null) {
-      //   history.push("/")
-      // }
+      if (consumer.data.token == null) {
+        history.push("/")
+      }
      var url=new URLSearchParams(window.location.search);
      const responce=await axios.get(`${host}api/property/find/${url.get("id")}`,  {
       headers:{

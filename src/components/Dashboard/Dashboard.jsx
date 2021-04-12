@@ -25,6 +25,7 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Pagination from '@material-ui/lab/Pagination';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 const useStyles = makeStyles((theme) => ({
   heading: {
     fontWeight: 700,
@@ -152,7 +153,7 @@ const ChildDashboard = () => {
 
   }
 
-  const addfav=async(sellerid,propertyid)=>{
+  const addfav=async(sellerid,propertyid,index)=>{
     
     const responce = await axios.post(`${host}api/userlist`,
     {
@@ -169,6 +170,8 @@ const ChildDashboard = () => {
       }
     });
   console.log(responce);
+console.log("ithu work aakuthaa");
+  seticon(icon=>[...icon,icon[index]=!icon[index]]);
 
   }
 
@@ -205,6 +208,8 @@ const ChildDashboard = () => {
     setMap(null)
   }, [])
 
+
+  const [icon,seticon]=useState([]);
   useEffect(async () => {
 
     if (consumer.data.token == null) {
@@ -228,6 +233,10 @@ const ChildDashboard = () => {
 
       console.log(responce);
       setproperty(responce.data.properties);
+      console.log(responce.data.properties.length);
+
+      responce.data.properties.map((data,index)=>(seticon(icon=>[...icon,true])));
+
     }
 
   }, []);
@@ -287,6 +296,7 @@ const ChildDashboard = () => {
 
 
 const getloc=()=>{
+  console.log(icon);
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
   } else {
@@ -315,6 +325,10 @@ function showError(error) {
    alert("An unknown error occurred.");
       break;
   }
+}
+
+const getlocation=(e)=>{
+console.log(e);
 }
   return (
     <>
@@ -372,6 +386,7 @@ function showError(error) {
                 zoom={14}
                 onLoad={onLoad}
                 onUnmount={onUnmount}
+                onClick={(e)=>getlocation(e)}
               >
                 { /* Child components, such as markers, info windows, etc. */}
                 {
@@ -393,7 +408,19 @@ function showError(error) {
                       clickable={true}
                       onCloseClick={()=>setSelected({})}
                     >
-                      <h1 onClick={() => nextpage(`/detail`, selected._id)}>{selected.name}</h1>
+                      <div className={style.card}>
+                <section className={style.image}>
+
+                  <img onClick={() => nextpage(`/detail`, selected._id)} className={style.img} alt="complex" src={selected.coverImage} />
+
+                </section>
+                <section className={style.section}>
+                  <div className={style.text}>₹{selected.price}</div>
+                  <div className={style.div}>FOR SALE</div>
+                  <div className={style.divtext}>{selected.address}</div>
+                
+                </section>
+              </div>
                     </InfoWindow>
                   )
                 }
@@ -418,19 +445,19 @@ function showError(error) {
         {/* End hero unit */}
         <Grid container spacing={4}>
           {property.map((card,index) => (
-            <Grid onClick={() => nextpage(`/detail`, card._id)} item key={card} xs={12} sm={6} md={6}>
+            <Grid  item key={card} xs={12} sm={6} md={6}>
               <div className={style.card}>
                 <section className={style.image}>
 
-                  <img className={style.img} alt="complex" src={card.coverImage} />
+                  <img onClick={() => nextpage(`/detail`, card._id)} className={style.img} alt="complex" src={card.coverImage} />
 
                 </section>
                 <section className={style.section}>
                   <div className={style.text}>₹{card.price}</div>
                   <div className={style.div}>FOR SALE</div>
                   <div className={style.divtext}>{card.address}</div>
-                  <div onClick={()=>addfav(card.sellerId,card._id)} className={style.iconflex} >
-                    <FavoriteIcon className={classes.icon} />
+                  <div onClick={()=>addfav(card.sellerId,card._id,index)} className={style.iconflex} >
+                  {icon[index]===true ? <FavoriteIcon   className={classes.icon} />:<FavoriteBorderIcon  className={classes.icon} />}  
                     <div className={style.fav}>Saved to favourites</div>
                   </div>
                 </section>
@@ -438,7 +465,7 @@ function showError(error) {
             </Grid>
           ))}
         </Grid>
-        {/* <Pagination count={10} page={page} onChange={handleChange} color="secondary" /> */}
+      <div style={{display:"flex",justifyContent:"center"}}>  <Pagination count={10} page={page} onChange={handleChange} color="secondary" /></div>
       </Container>
     </>
   )

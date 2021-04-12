@@ -79,7 +79,7 @@ const [isloading,setloading]=useState(false);
       setloading(true);
       console.log(email);
       console.log(password);
-      const responce=await axios.post(`${host}api/auth`,{
+      const responce=await axios.post(`${host}api/auth/login`,{
         email,password
       });
       console.log(responce);
