@@ -114,10 +114,7 @@ function Popup(props) {
         <>
              <Container className={classes.cardGrid} maxWidth="md">
 
-   
-<Grid container  spacing={5} className={classes.grid4} >
-<Grid item  xs={6} sm={6} md={6}>
-          <Typography>Enter title</Typography>
+             <Typography>Enter Current Password</Typography>
 <TextField
 size={"small"}
             variant="outlined"
@@ -130,20 +127,36 @@ size={"small"}
             autoComplete="lastname"
             autoFocus
             onChange={(val)=>setemail(val.target.value)}
-          />  
-              </Grid>
+          /> 
 
-           
-              <Grid item  xs={6} sm={6} md={6}>
-              <Grid container className={classes.grid}>
-                   <Typography>Enter title (optional)    </Typography>
-              <Button color="primary" variant="contained" className={classes.btn1} component="span">
-    Upload
-  </Button>
-              </Grid>
-              </Grid>
-
-             </Grid>
+<Typography>Enter New Password</Typography>
+<TextField
+size={"small"}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="lastname"
+            label=""
+            name="lastname"
+            autoComplete="lastname"
+            autoFocus
+            onChange={(val)=>setemail(val.target.value)}
+          /> 
+          <Typography>Re-enter Password</Typography>
+<TextField
+size={"small"}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="lastname"
+            label=""
+            name="lastname"
+            autoComplete="lastname"
+            autoFocus
+            onChange={(val)=>setemail(val.target.value)}
+          /> 
               <Grid container  spacing={5} className={classes.grid1} >
 <Button  size="small" onClick={submit} className={classes.btn2} variant="contained" color="secondary">
 save

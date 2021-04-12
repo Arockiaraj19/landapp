@@ -115,8 +115,8 @@ function Popup(props) {
              <Container className={classes.cardGrid} maxWidth="md">
 
    
-<Grid container  spacing={5} className={classes.grid4} >
-<Grid item  xs={6} sm={6} md={6}>
+<Grid container  spacing={2} className={classes.grid4} >
+<Grid item  xs={12} sm={12} md={12}>
           <Typography>Enter title</Typography>
 <TextField
 size={"small"}
@@ -134,7 +134,7 @@ size={"small"}
               </Grid>
 
            
-              <Grid item  xs={6} sm={6} md={6}>
+              <Grid item  xs={12} sm={12} md={12}>
               <Grid container className={classes.grid}>
                    <Typography>Enter title (optional)    </Typography>
               <Button color="primary" variant="contained" className={classes.btn1} component="span">

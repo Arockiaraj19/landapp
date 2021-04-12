@@ -9,7 +9,7 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { consumerdata } from "../../App"
 import { useHistory } from "react-router-dom"
 import Header from "../Header/Header"
-import Modelcon from "./model"
+import Modelcon from "./profilemodel"
 
 const useStyles = makeStyles((theme) => ({
     paper1: {

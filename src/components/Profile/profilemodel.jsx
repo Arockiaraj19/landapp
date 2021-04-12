@@ -63,11 +63,12 @@ const useStyles = makeStyles((theme) => ({
   );
 
   return (
-    <div onClick={handleOpen}>
+    <div >
     
-<Typography style={{textDecoration:"underline"}}  component="h1" variant="h5">
-                        Change Password
-        </Typography>
+
+        <Button onClick={handleOpen} className={classes.btn1} variant="contained" color="secondary">
+        Change Password
+</Button>
 
       <Modal
         open={open}

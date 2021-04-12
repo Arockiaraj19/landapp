@@ -44,6 +44,9 @@ const nextpage=()=>{
 const nextpage1=()=>{
   history.push(`/mylist`);
 }
+const nextpage2=()=>{
+  history.push(`/profile`);
+}
     return (
         <>
         <AppBar elevation={0}  position="fixed" style={{height:"12%",backgroundColor:"#EAEAEA"}}>
@@ -65,7 +68,7 @@ const nextpage1=()=>{
         onClose={handleClose}
       >
         <MenuItem onClick={nextpage1}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Settings</MenuItem>
+        <MenuItem onClick={nextpage2}>Settings</MenuItem>
         <MenuItem onClick={handleClose}>Logout</MenuItem>
       </Menu>
     </div>
