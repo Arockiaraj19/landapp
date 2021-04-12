@@ -1,4 +1,4 @@
-import React,{useEffect,useContext} from 'react'
+import React,{useEffect,useContext,useState} from 'react'
 import {Modal,Avatar,Container,TextField,Button,Typography,Grid,Card,CardContent,CardMedia,CardActions,ButtonBase} from "@material-ui/core"
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,6 +8,7 @@ import {host} from "../colors"
 import axios from "axios"
 import { consumerdata } from "../../App"
 import ClearIcon from '@material-ui/icons/Clear';
+import { CardTravel } from '@material-ui/icons';
 const useStyles = makeStyles((theme) => ({
     paper1: {
       position: 'absolute',
@@ -86,6 +87,7 @@ const useStyles = makeStyles((theme) => ({
 function History1() {
     const cards = [1, 2];
     const classes = useStyles();
+    const [history,sethistory]=useState([]);
 const consumer=useContext(consumerdata);
 useEffect(async() => {
   const responce=await axios.get(`${host}api/history`,{
@@ -97,6 +99,7 @@ useEffect(async() => {
     }
   });
   console.log(responce);
+  sethistory(responce.data.history);
 }, [])
 
 
@@ -107,16 +110,24 @@ const clearhistory=async()=>{
     }
   });
   console.log(responce);
+  sethistory([]);
 }
 
 const deletei=async(e)=>{
+  console.log("deleted");
   const responce=await axios.delete(`${host}api/history/${e}`,{
     headers:{
       "authorization":consumer.data.token,
     }
   });
-  console.log(responce);
+sethistory(history.filter(x => x._id !== e));
 }
+
+
+const nextpage = async (e, id) => {
+  history.push(e + `?id=${id}`);
+}
+
 
     return (
         <>
@@ -128,23 +139,23 @@ const deletei=async(e)=>{
 
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
+            {history.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={6}>
-                <ClearIcon onClick={()=>deletei("sdfsdfsdfsdf")} className={classes.clean}/>
+                <ClearIcon onClick={()=>deletei(card._id)} className={classes.clean}/>
                <div className={style.card}>
 <section className={style.image}>
 
-              <img className={style.img} alt="complex" src="https://source.unsplash.com/random" />
+              <img className={style.img} onClick={() => nextpage(`/detail`, card.propertyId._id)} alt="complex" src={card.propertyId.coverImage} />
           
 </section>
 <section className={style.section}>
-    <div className={style.text}>$200,00</div>
+    <div className={style.text}>₹{card.propertyId.price}</div>
 
-    <div className={style.divtext}>9578-Farvaric-point,Lane Eastern,MD-2640510054111</div>
+    <div className={style.divtext}>{card.propertyId.address}</div>
     <div className={style.iconflex} >
     <div className={style.text1}>status  :  </div>
    
-    <div className={style.div}>Available</div>
+    <div className={style.div}>{card.propertyId.status}</div>
     </div>
  
 </section>

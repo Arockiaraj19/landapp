@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useContext,useState} from 'react'
 import {Modal,Avatar,Container,TextField,Button,Typography,Grid,Card,CardContent,CardMedia,CardActions,ButtonBase} from "@material-ui/core"
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,6 +6,7 @@ import style from "./History.module.css"
 import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 import {host} from "../colors"
 import axios from "axios"
+import {consumerdata} from "../../App"
 const useStyles = makeStyles((theme) => ({
     paper1: {
       position: 'absolute',
@@ -73,40 +74,54 @@ const useStyles = makeStyles((theme) => ({
 
 
 function Favour() {
+  let consumer=useContext(consumerdata);
     const cards = [1, 2, 3,4,5,6,7];
     const classes = useStyles();
 
+    const [fav,setfav]=useState([]);
+
     useEffect(async() => {
-      const responce=await axios.get(`${host}api/favarate`,{
-        headers:{
-          "authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTcxYmMyOGZiOGFkMWUyOGFhOWVjYiIsImlhdCI6MTYxNjMyMTQ5MX0.FzsgCbZXazN8zvYEvdEk06V31_309OxDLQbJAglR2uk",
+      const responce = await axios.get(`${host}api/userlist?id=${consumer.data.userid}`,{
+        headers: {
+          "authorization": consumer.data.token,
         }
       });
-      console.log(responce);
-    }, [])
+      console.log(responce.data.userList);
+      responce.data.userList.map(async(e,index)=>{
+        const returndata=await axios.get(`${host}api/property/find/${e.propertyId}`,{
+          headers: {
+            "authorization": consumer.data.token,
+          }
+        });
+        setfav(fav=>[...fav,returndata.data.property])
+      })
+  
+    }, []);
 
-
+const getdata=()=>{
+  console.log(fav);
+}
     return (
         <>
-               <Container className={classes.cardGrid} maxWidth="md">
+               <Container onClick={getdata} className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
+            {fav.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={6}>
                <div className={style.card}>
 <section className={style.image}>
 
-              <img className={style.img} alt="complex" src="https://source.unsplash.com/random" />
+              <img className={style.img} alt="complex" src={card.coverImage} />
           
 </section>
 <section className={style.section}>
-    <div className={style.text}>$200,00</div>
+    <div className={style.text}>₹{card.price}</div>
 
-    <div className={style.divtext}>9578-Farvaric-point,Lane Eastern,MD-2640510054111</div>
+    <div className={style.divtext}>{card.address}</div>
     <div className={style.iconflex} >
     <div className={style.text1}>status  :  </div>
    
-    <div className={style.div}>Available</div>
+    <div className={style.div}>{card.status}</div>
     </div>
  
 </section>

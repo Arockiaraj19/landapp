@@ -10,8 +10,14 @@ import {
     KeyboardDatePicker,
   } from '@material-ui/pickers';
 import axios from "axios"
-import {host} from "../../colors"
+import {host,kred} from "../../colors"
 import {consumerdata} from "../../../App"
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
 const useStyles = makeStyles((theme) => ({
    p:{
        fontSize:"1rem",
@@ -64,7 +70,9 @@ div:{
 
 
 
-
+    const Transition = React.forwardRef(function Transition(props, ref) {
+      return <Slide direction="up" ref={ref} {...props} />;
+    });
 
 function Openhouse(props) {
   const consumer=useContext(consumerdata);
@@ -98,6 +106,9 @@ function Openhouse(props) {
         }
       });
       console.log(responce);
+      if(responce.status===200){
+        handleClickOpen();
+      }
     }
 
 
@@ -106,8 +117,38 @@ function Openhouse(props) {
     };
 
     const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
     return (
         <>
+         <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+        {/* <DialogTitle id="alert-dialog-slide-title">{"Use Google's location service?"}</DialogTitle> */}
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+          New open schedule created
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+         
+          <Button onClick={handleClose} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
              <Container className={classes.cardGrid} maxWidth="md">
      <p className={classes.p}>Schedule open house</p>
 
@@ -122,10 +163,10 @@ function Openhouse(props) {
      <Grid container className={classes.grid}>
      <Grid item  xs={6} sm={6} md={6}>
     
-     <Button  size="small"  onClick={()=>settype("inperson")} className={classes.btn3} variant="contained" color="secondary">
+     <Button  size="small" style={{backgroundColor:type=="In person"?"grey":kred}} onClick={()=>settype("In person")} className={classes.btn3} variant="contained" color="secondary">
  InPerson
 </Button>
-<Button  size="small" onClick={()=>settype("virtual")} className={classes.btn1} variant="contained" color="secondary">
+<Button  size="small" style={{backgroundColor:type=="Virtual"?"grey":kred}} onClick={()=>settype("Virtual")} className={classes.btn1} variant="contained" color="secondary">
  Virtual
 </Button>
 

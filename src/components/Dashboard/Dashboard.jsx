@@ -457,7 +457,7 @@ console.log(e);
                   <div className={style.div}>FOR SALE</div>
                   <div className={style.divtext}>{card.address}</div>
                   <div onClick={()=>addfav(card.sellerId,card._id,index)} className={style.iconflex} >
-                  {icon[index]===true ? <FavoriteIcon   className={classes.icon} />:<FavoriteBorderIcon  className={classes.icon} />}  
+                  {icon[index]===true ? <FavoriteBorderIcon   className={classes.icon} />:<FavoriteIcon  className={classes.icon} />}  
                     <div className={style.fav}>Saved to favourites</div>
                   </div>
                 </section>
